@@ -1,0 +1,14 @@
+model\Catalog.class
+model\DatabaseSource.class
+model\Motorbike.class
+services\CatalogTableServlet.class
+model\DataSource.class
+model\Singleton.class
+services\SimpleCalculatorServlet.class
+model\MotorbikeType.class
+model\AppException.class
+services\MotoTableServlet.class
+app\polsl\motocatweb\JakartaEE91Resource.class
+model\Calculator.class
+services\CatalogActionServlet.class
+app\polsl\motocatweb\JakartaRestConfiguration.class

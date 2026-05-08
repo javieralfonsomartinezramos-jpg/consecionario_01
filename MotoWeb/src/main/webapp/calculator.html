@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Calculator</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/calculator.js"></script>
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
+    <body>
+        <h1>Calculator</h1>
+        <p><a href="index.html">Home</a></p>
+        <p><a href="table.html">Catalog</a></p>
+        <form action="calculator" method="GET">
+            <input type="text" id="arg1" name="arg1" />
+            <input type="text" id="arg2" name="arg2" />
+            <input type="submit" value="." />
+        </form>
+        
+        <input type="button" id="calc" value="Calculate" onclick="getResult('arg1', 'arg2', 'result');" />
+        <p id="result">Result: </p>
+    </body>
+</html>
