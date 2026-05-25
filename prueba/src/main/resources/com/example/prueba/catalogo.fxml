@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.prueba.CatalogoController"
+            style="-fx-background-color: #111111;">
+
+   <top>
+
+      <HBox alignment="CENTER_LEFT"
+            prefHeight="90"
+            spacing="20"
+            style="-fx-background-color: #1f1f1f; -fx-padding: 15;">
+
+         <ImageView fitHeight="60"
+                    fitWidth="60"
+                    preserveRatio="true">
+            <image>
+               <Image url="@images/user.png"/>
+            </image>
+         </ImageView>
+
+         <VBox spacing="5">
+
+            <Label text="MOTOSHOP"
+                   textFill="#d9ad26">
+               <font>
+                  <Font size="28"/>
+               </font>
+            </Label>
+
+            <Label fx:id="lblUsuario"
+                   text="Usuario"
+                   textFill="white">
+               <font>
+                  <Font size="16"/>
+               </font>
+            </Label>
+
+         </VBox>
+
+         <Pane HBox.hgrow="ALWAYS"/>
+
+         <Button text="TIENDA"
+                 onAction="#abrirTienda"
+                 style="-fx-background-color:#d9ad26;
+                        -fx-background-radius:15;" />
+
+         <Button text="CARRITO"
+                 onAction="#abrirCarrito"
+                 style="-fx-background-color:#d9ad26;
+                        -fx-background-radius:15;" />
+
+         <Button text="HISTORIAL"
+                 onAction="#abrirHistorial"
+                 style="-fx-background-color:#d9ad26;
+                        -fx-background-radius:15;" />
+
+         <Label text="Precio:"
+                textFill="white"/>
+
+         <ComboBox fx:id="comboPrecio"
+                   onAction="#filtrarPrecio"
+                   prefWidth="160"
+                   promptText="Selecciona"/>
+
+         <Label text="CC:"
+                textFill="white"/>
+
+         <ComboBox fx:id="comboCc"
+                   onAction="#filtrarCc"
+                   prefWidth="170"
+                   promptText="Selecciona"/>
+
+         <Button text="Reset"
+                 onAction="#resetearCatalogo"
+                 style="-fx-background-color:#009688;
+                        -fx-text-fill:white;" />
+
+         <Button fx:id="btnAdmin"
+                 text="ADMIN PANEL"
+                 onAction="#abrirAdminPanel"
+                 style="-fx-background-color:#ff4444;
+                        -fx-text-fill:white;
+                        -fx-background-radius:15;" />
+
+      </HBox>
+
+   </top>
+
+
+   <center>
+
+      <ScrollPane fitToWidth="true"
+                  style="-fx-background:#111111;">
+
+         <content>
+
+            <FlowPane fx:id="flowPane"
+                      alignment="CENTER"
+                      hgap="40"
+                      vgap="40"
+                      style="-fx-padding:40;">
+
+
+               <!-- HONDA -->
+               <VBox alignment="CENTER"
+                     prefWidth="320"
+                     spacing="12"
+                     style="-fx-background-color:#222222;
+                            -fx-background-radius:20;
+                            -fx-padding:20;">
+
+                  <ImageView fitHeight="170"
+                             fitWidth="250"
+                             preserveRatio="true">
+                     <image>
+                        <Image url="@images/honda_cbr_600rr.png"/>
+                     </image>
+                  </ImageView>
+
+                  <Label text="Honda CBR 600RR"
+                         textFill="white">
+                     <font>
+                        <Font size="22"/>
+                     </font>
+                  </Label>
+
+                  <Label text="600 CC"
+                         textFill="#bbbbbb"/>
+
+                  <Label text="12.000"
+                         textFill="#d9ad26">
+                     <font>
+                        <Font size="24"/>
+                     </font>
+                  </Label>
+
+                  <Button fx:id="a_cbr"
+                          text="Agregar al carrito"
+                          prefWidth="220"
+                          style="-fx-background-color:#d9ad26;"/>
+
+               </VBox>
+
+
+               <!-- NINJA -->
+               <VBox alignment="CENTER"
+                     prefWidth="320"
+                     spacing="12"
+                     style="-fx-background-color:#222222;
+                            -fx-background-radius:20;
+                            -fx-padding:20;">
+
+                  <ImageView fitHeight="170"
+                             fitWidth="250"
+                             preserveRatio="true">
+                     <image>
+                        <Image url="@images/kawasaki_ninja_400.jpg"/>
+                     </image>
+                  </ImageView>
+
+                  <Label text="Kawasaki Ninja 400"
+                         textFill="white">
+                     <font>
+                        <Font size="22"/>
+                     </font>
+                  </Label>
+
+                  <Label text="400 CC"
+                         textFill="#bbbbbb"/>
+
+                  <Label text="6.500"
+                         textFill="#d9ad26">
+                     <font>
+                        <Font size="24"/>
+                     </font>
+                  </Label>
+
+                  <Button fx:id="a_ninja"
+                          text="Agregar al carrito"
+                          prefWidth="220"
+                          style="-fx-background-color:#d9ad26;"/>
+
+               </VBox>
+
+
+               <!-- MT15 -->
+               <VBox alignment="CENTER"
+                     prefWidth="320"
+                     spacing="12"
+                     style="-fx-background-color:#222222;
+                            -fx-background-radius:20;
+                            -fx-padding:20;">
+
+                  <ImageView fitHeight="170"
+                             fitWidth="250"
+                             preserveRatio="true">
+                     <image>
+                        <Image url="@images/mt15_temp_darkGray.png"/>
+                     </image>
+                  </ImageView>
+
+                  <Label text="Yamaha MT 15"
+                         textFill="white">
+                     <font>
+                        <Font size="22"/>
+                     </font>
+                  </Label>
+
+                  <Label text="200 CC"
+                         textFill="#bbbbbb"/>
+
+                  <Label text="5.000"
+                         textFill="#d9ad26">
+                     <font>
+                        <Font size="24"/>
+                     </font>
+                  </Label>
+
+                  <Button fx:id="a_mt15"
+                          text="Agregar al carrito"
+                          prefWidth="220"
+                          style="-fx-background-color:#d9ad26;"/>
+
+               </VBox>
+
+
+               <!-- R1 -->
+               <VBox alignment="CENTER"
+                     prefWidth="320"
+                     spacing="12"
+                     style="-fx-background-color:#222222;
+                            -fx-background-radius:20;
+                            -fx-padding:20;">
+
+                  <ImageView fitHeight="170"
+                             fitWidth="250"
+                             preserveRatio="true">
+                     <image>
+                        <Image url="@images/R1-2022-COLOR_AZUL.jpg"/>
+                     </image>
+                  </ImageView>
+
+                  <Label text="Yamaha R1"
+                         textFill="white">
+                     <font>
+                        <Font size="22"/>
+                     </font>
+                  </Label>
+
+                  <Label text="1000 CC"
+                         textFill="#bbbbbb"/>
+
+                  <Label text="18.000"
+                         textFill="#d9ad26">
+                     <font>
+                        <Font size="24"/>
+                     </font>
+                  </Label>
+
+                  <Button fx:id="a_R1"
+                          text="Agregar al carrito"
+                          prefWidth="220"
+                          style="-fx-background-color:#d9ad26;"/>
+
+               </VBox>
+
+
+               <!-- GSX -->
+               <VBox alignment="CENTER"
+                     prefWidth="320"
+                     spacing="12"
+                     style="-fx-background-color:#222222;
+                            -fx-background-radius:20;
+                            -fx-padding:20;">
+
+                  <ImageView fitHeight="170"
+                             fitWidth="250"
+                             preserveRatio="true">
+                     <image>
+                        <Image url="@images/suzuki_gsx_r1000.png"/>
+                     </image>
+                  </ImageView>
+
+                  <Label text="Suzuki GSX-R 1000"
+                         textFill="white">
+                     <font>
+                        <Font size="22"/>
+                     </font>
+                  </Label>
+
+                  <Label text="1000 CC"
+                         textFill="#bbbbbb"/>
+
+                  <Label text="15.500"
+                         textFill="#d9ad26">
+                     <font>
+                        <Font size="24"/>
+                     </font>
+                  </Label>
+
+                  <Button fx:id="a_gsx"
+                          text="Agregar al carrito"
+                          prefWidth="220"
+                          style="-fx-background-color:#d9ad26;"/>
+
+               </VBox>
+
+
+               <!-- MT09 -->
+               <VBox alignment="CENTER"
+                     prefWidth="320"
+                     spacing="12"
+                     style="-fx-background-color:#222222;
+                            -fx-background-radius:20;
+                            -fx-padding:20;">
+
+                  <ImageView fitHeight="170"
+                             fitWidth="250"
+                             preserveRatio="true">
+                     <image>
+                        <Image url="@images/yamaha_mt07.jpg"/>
+                     </image>
+                  </ImageView>
+
+                  <Label text="Yamaha MT 09"
+                         textFill="white">
+                     <font>
+                        <Font size="22"/>
+                     </font>
+                  </Label>
+
+                  <Label text="900 CC"
+                         textFill="#bbbbbb"/>
+
+                  <Label text="10.500"
+                         textFill="#d9ad26">
+                     <font>
+                        <Font size="24"/>
+                     </font>
+                  </Label>
+
+                  <Button fx:id="a_mt09"
+                          text="Agregar al carrito"
+                          prefWidth="220"
+                          style="-fx-background-color:#d9ad26;"/>
+
+               </VBox>
+
+            </FlowPane>
+
+         </content>
+
+      </ScrollPane>
+
+   </center>
+
+</BorderPane>
