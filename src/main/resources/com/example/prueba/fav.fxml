@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane style="-fx-background-color: #121212;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/26" fx:controller="com.example.prueba.FavController">
+
+    <!-- TOP -->
+
+    <top>
+
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 20;                      -fx-background-color: #1e1e1e;">
+
+            <Label style="-fx-text-fill: white;                           -fx-font-size: 28;                           -fx-font-weight: bold;" text="MIS FAVORITOS" />
+
+            <Button onAction="#volverCatalogo" style="-fx-background-color: #d9ad26;                            -fx-text-fill: black;                            -fx-font-size: 14;                            -fx-font-weight: bold;                            -fx-background-radius: 15;" text="Volver" />
+
+        </HBox>
+
+    </top>
+
+    <!-- CENTRO -->
+
+    <center>
+
+        <ScrollPane fitToWidth="true" style="-fx-background: #121212;">
+
+            <content>
+
+                <FlowPane fx:id="flowFavoritos" hgap="20" prefWrapLength="1200" style="-fx-padding: 20;                                  -fx-background-color: #121212;" vgap="20" />
+
+            </content>
+
+        </ScrollPane>
+
+    </center>
+
+</BorderPane>

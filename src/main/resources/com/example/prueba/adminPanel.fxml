@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<StackPane style="-fx-background-color: linear-gradient(to bottom right, #050505, #111111, #1a1a1a);" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prueba.adminPanelController">
+
+    <children>
+
+        <!-- EFECTOS FUTURISTAS -->
+
+        <Circle fill="#d9ad26" opacity="0.05" radius="220" translateX="-420" translateY="-320" />
+
+        <Circle fill="#d9ad26" opacity="0.04" radius="180" translateX="420" translateY="320" />
+
+        <!-- PANEL -->
+
+        <VBox alignment="CENTER" maxWidth="520" spacing="18" style="                     -fx-background-color: rgba(20,20,20,0.95);                     -fx-background-radius: 30;                     -fx-border-color: rgba(217,173,38,0.20);                     -fx-border-width: 1.5;                     -fx-border-radius: 30;                     -fx-padding: 35;               ">
+
+            <effect>
+                <DropShadow color="#000000" height="35" radius="35" width="35" />
+            </effect>
+
+            <padding>
+                <Insets bottom="15" left="15" right="15" top="15" />
+            </padding>
+
+            <!-- TITULO -->
+
+            <Label text="⚙ ADMIN PANEL" textFill="#d9ad26">
+
+                <font>
+                    <Font size="36" />
+                </font>
+
+            </Label>
+
+            <!-- SUBTITULO -->
+
+            <Label style="                         -fx-text-fill: #aaaaaa;                         -fx-font-size: 15;                    " text="Agregar motocicletas  al catálogo" />
+
+            <!-- EASTER EGG -->
+
+            <Label style="                         -fx-text-fill: #00ff99;                         -fx-font-size: 13;                         -fx-font-weight: bold;                    " text="🏍 MOTO LAB SYSTEM ONLINE" />
+
+            <!-- NOMBRE -->
+
+            <VBox alignment="CENTER_LEFT" spacing="6">
+
+                <Label style="                             -fx-text-fill: #d9ad26;                             -fx-font-size: 14;                             -fx-font-weight: bold;                        " text="NOMBRE DE LA MOTO" />
+
+                <TextField fx:id="txtNombre" prefHeight="42" prefWidth="360" promptText="Ej: Yamaha R6" style="                                 -fx-background-color: #1f1f1f;                                 -fx-text-fill: white;                                 -fx-prompt-text-fill: #777777;                                 -fx-background-radius: 16;                                 -fx-border-color: rgba(217,173,38,0.20);                                 -fx-border-radius: 16;                                 -fx-font-size: 14;                            " />
+
+            </VBox>
+
+            <!-- MARCA -->
+
+            <VBox alignment="CENTER_LEFT" spacing="6">
+
+                <Label style="                             -fx-text-fill: #d9ad26;                             -fx-font-size: 14;                             -fx-font-weight: bold;                        " text="MARCA" />
+
+                <ComboBox fx:id="comboMarca" prefHeight="42" prefWidth="360" promptText="Selecciona marca" style="                                 -fx-background-color: #1f1f1f;                                 -fx-text-fill: white;                                 -fx-background-radius: 16;                                 -fx-font-size: 14;                           " />
+
+            </VBox>
+
+            <!-- CILINDRAJE -->
+
+            <VBox alignment="CENTER_LEFT" spacing="6">
+
+                <Label style="                             -fx-text-fill: #d9ad26;                             -fx-font-size: 14;                             -fx-font-weight: bold;                        " text="CILINDRAJE" />
+
+                <TextField fx:id="txtCc" prefHeight="42" prefWidth="360" promptText="Ej: 600" style="                                 -fx-background-color: #1f1f1f;                                 -fx-text-fill: white;                                 -fx-prompt-text-fill: #777777;                                 -fx-background-radius: 16;                                 -fx-border-color: rgba(217,173,38,0.20);                                 -fx-border-radius: 16;                                 -fx-font-size: 14;                            " />
+
+            </VBox>
+
+            <!-- PRECIO -->
+
+            <VBox alignment="CENTER_LEFT" spacing="6">
+
+                <Label style="                             -fx-text-fill: #d9ad26;                             -fx-font-size: 14;                             -fx-font-weight: bold;                        " text="PRECIO" />
+
+                <TextField fx:id="txtPrecio" prefHeight="42" prefWidth="360" promptText="Ej: 15000" style="                                 -fx-background-color: #1f1f1f;                                 -fx-text-fill: white;                                 -fx-prompt-text-fill: #777777;                                 -fx-background-radius: 16;                                 -fx-border-color: rgba(217,173,38,0.20);                                 -fx-border-radius: 16;                                 -fx-font-size: 14;                            " />
+
+            </VBox>
+
+            <!-- STOCK -->
+
+            <VBox alignment="CENTER_LEFT" spacing="6">
+
+                <Label style="                             -fx-text-fill: #d9ad26;                             -fx-font-size: 14;                             -fx-font-weight: bold;                        " text="STOCK" />
+
+                <TextField fx:id="txtStock" prefHeight="42" prefWidth="360" promptText="Ej: 5" style="                                 -fx-background-color: #1f1f1f;                                 -fx-text-fill: white;                                 -fx-prompt-text-fill: #777777;                                 -fx-background-radius: 16;                                 -fx-border-color: rgba(217,173,38,0.20);                                 -fx-border-radius: 16;                                 -fx-font-size: 14;                            " />
+
+            </VBox>
+
+            <!-- IMAGEN -->
+
+            <VBox alignment="CENTER_LEFT" spacing="6">
+
+                <Label style="                             -fx-text-fill: #d9ad26;                             -fx-font-size: 14;                             -fx-font-weight: bold;                        " text="ARCHIVO DE IMAGEN" />
+
+                <TextField fx:id="txtImagen" prefHeight="42" prefWidth="360" promptText="Ej: yamaha-r6.png" style="                                 -fx-background-color: #1f1f1f;                                 -fx-text-fill: white;                                 -fx-prompt-text-fill: #777777;                                 -fx-background-radius: 16;                                 -fx-border-color: rgba(217,173,38,0.20);                                 -fx-border-radius: 16;                                 -fx-font-size: 14;                            " />
+
+            </VBox>
+
+            <!-- BOTONES -->
+
+            <HBox alignment="CENTER" spacing="18">
+
+                <children>
+
+                    <!-- GUARDAR -->
+
+                    <Button onAction="#guardarMoto" prefHeight="48" prefWidth="170" style="                                 -fx-background-color: linear-gradient(to right, #d9ad26, #f0c94d);                                 -fx-text-fill: black;                                 -fx-font-size: 15;                                 -fx-font-weight: bold;                                 -fx-background-radius: 18;                                 -fx-cursor: hand;                             " text="💾 GUARDAR" />
+
+                    <!-- CERRAR -->
+
+                    <Button onAction="#cerrarVentana" prefHeight="48" prefWidth="170" style="                                 -fx-background-color: linear-gradient(to right, #ff4444, #cc2222);                                 -fx-text-fill: white;                                 -fx-font-size: 15;                                 -fx-font-weight: bold;                                 -fx-background-radius: 18;                                 -fx-cursor: hand;                             " text="✖ CERRAR" />
+
+                </children>
+
+            </HBox>
+
+            <!-- FOOTER -->
+
+            <Label style="                         -fx-text-fill: #666666;                         -fx-font-size: 11;                    " text="MOTOSHOP • GARAGE EDITION" />
+
+        </VBox>
+
+    </children>
+
+</StackPane>

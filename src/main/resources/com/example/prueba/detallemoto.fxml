@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="900.0"
+            prefWidth="1400.0"
+            style="-fx-background-color: #121212;"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.prueba.DetalleMotoController">
+
+    <children>
+
+        <VBox alignment="CENTER"
+              spacing="25.0"
+              AnchorPane.topAnchor="30.0"
+              AnchorPane.leftAnchor="50.0"
+              AnchorPane.rightAnchor="50.0">
+
+            <!-- TITULO -->
+
+            <Label fx:id="lblNombre"
+                   text="Honda CBR 600RR"
+                   style="-fx-text-fill: white;
+                          -fx-font-size: 38px;
+                          -fx-font-weight: bold;" />
+
+            <!-- IMAGEN -->
+
+            <ImageView fx:id="imgMoto"
+                       fitWidth="650"
+                       fitHeight="380"
+                       preserveRatio="true" />
+
+            <!-- INFORMACION -->
+
+            <HBox alignment="CENTER"
+                  spacing="40">
+
+                <VBox alignment="CENTER"
+                      spacing="15"
+                      style="-fx-background-color: #1e1e1e;
+                             -fx-background-radius: 20;
+                             -fx-padding: 25;">
+
+                    <Label text="Marca"
+                           style="-fx-text-fill: #aaaaaa;
+                                  -fx-font-size: 18px;" />
+
+                    <Label fx:id="lblMarca"
+                           text="Honda"
+                           style="-fx-text-fill: white;
+                                  -fx-font-size: 24px;
+                                  -fx-font-weight: bold;" />
+                </VBox>
+
+                <VBox alignment="CENTER"
+                      spacing="15"
+                      style="-fx-background-color: #1e1e1e;
+                             -fx-background-radius: 20;
+                             -fx-padding: 25;">
+
+                    <Label text="Cilindraje"
+                           style="-fx-text-fill: #aaaaaa;
+                                  -fx-font-size: 18px;" />
+
+                    <Label fx:id="lblCc"
+                           text="600 CC"
+                           style="-fx-text-fill: white;
+                                  -fx-font-size: 24px;
+                                  -fx-font-weight: bold;" />
+                </VBox>
+
+                <VBox alignment="CENTER"
+                      spacing="15"
+                      style="-fx-background-color: #1e1e1e;
+                             -fx-background-radius: 20;
+                             -fx-padding: 25;">
+
+                    <Label text="Precio"
+                           style="-fx-text-fill: #aaaaaa;
+                                  -fx-font-size: 18px;" />
+
+                    <Label fx:id="lblPrecio"
+                           text="$12000"
+                           style="-fx-text-fill: #d9ad26;
+                                  -fx-font-size: 28px;
+                                  -fx-font-weight: bold;" />
+                </VBox>
+
+                <VBox alignment="CENTER"
+                      spacing="15"
+                      style="-fx-background-color: #1e1e1e;
+                             -fx-background-radius: 20;
+                             -fx-padding: 25;">
+
+                    <Label text="Stock"
+                           style="-fx-text-fill: #aaaaaa;
+                                  -fx-font-size: 18px;" />
+
+                    <Label fx:id="lblStock"
+                           text="5"
+                           style="-fx-text-fill: #00c853;
+                                  -fx-font-size: 24px;
+                                  -fx-font-weight: bold;" />
+                </VBox>
+
+            </HBox>
+
+            <!-- DESCRIPCION -->
+
+            <VBox spacing="15"
+                  alignment="CENTER"
+                  style="-fx-background-color: #1e1e1e;
+                         -fx-background-radius: 25;
+                         -fx-padding: 30;"
+                  maxWidth="900">
+
+                <Label text="Descripción"
+                       style="-fx-text-fill: white;
+                              -fx-font-size: 28px;
+                              -fx-font-weight: bold;" />
+
+                <Label fx:id="lblDescripcion"
+                       wrapText="true"
+                       text="Motocicleta deportiva de alto rendimiento."
+                       style="-fx-text-fill: #cccccc;
+                              -fx-font-size: 18px;" />
+            </VBox>
+
+            <!-- BOTONES -->
+
+            <HBox alignment="CENTER"
+                  spacing="25">
+
+                <Button text="Agregar al carrito"
+                        onAction="#agregarCarrito"
+                        style="-fx-background-color: #d9ad26;
+                               -fx-text-fill: black;
+                               -fx-font-size: 18px;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 20;
+                               -fx-padding: 15 30;
+                               -fx-cursor: hand;" />
+
+                <Button text="❤ Favorito"
+                        onAction="#agregarFavorito"
+                        style="-fx-background-color: #ff2d55;
+                               -fx-text-fill: white;
+                               -fx-font-size: 18px;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 20;
+                               -fx-padding: 15 30;
+                               -fx-cursor: hand;" />
+
+                <Button text="Volver"
+                        onAction="#volverCatalogo"
+                        style="-fx-background-color: #2c2c2c;
+                               -fx-text-fill: white;
+                               -fx-font-size: 18px;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 20;
+                               -fx-padding: 15 30;
+                               -fx-cursor: hand;" />
+
+            </HBox>
+
+        </VBox>
+
+    </children>
+
+</AnchorPane>
