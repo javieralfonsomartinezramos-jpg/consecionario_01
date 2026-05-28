@@ -1,0 +1,15 @@
+Honda CBR 600RR,Honda,600,12000,5,honda_cbr_600rr.png
+Kawasaki Ninja 400,Kawasaki,400,6500,5,kawasaki_ninja_400.png
+Yamaha MT 15,Yamaha,155,5000,5,mt15_temp_darkGray.png
+Yamaha R1,Yamaha,1000,18000,5,R1-2022-COLOR_AZUL.png
+Suzuki GSX-R 1000,Suzuki,1000,15500,5,suzuki_gsx_r1000.png
+Yamaha MT 07,Yamaha,700,8500,5,yamaha_mt07.png
+Bajaj Pulsar NS 200,Bajaj,200,3000,5,bajaj-pulsar-ns200.png
+BMW M 1000 RR,BMW,1000,35000,5,bmw-m1000rr.png
+Honda CBF 125,Honda,125,2500,5,honda-cbf125.png
+Honda CBR 600RR Blanca,Honda,600,12500,5,Honda-CBR600RR.png
+Honda CBR 1000RR,Honda,1000,20000,5,honda-cbr1000rr.png
+Kawasaki Z650,Kawasaki,650,8000,5,kawasaki-z650.png
+KTM RC 390,KTM,390,6000,5,ktm-rc390.png
+Suzuki Gixxer SF 250,Suzuki,250,4500,5,suzuki-gixxer-sf250.png
+Yamaha YZF R3,Yamaha,320,6000,5,yamaha-yzf-r3.png
