@@ -5,9 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -17,175 +15,239 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.text.Font?>
 
-<StackPane style="-fx-background-color: linear-gradient(to bottom right, #050505, #101010, #181818);" xmlns="http://javafx.com/javafx/26|" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prueba.CatalogoController">
-
-   <children>
-
-      <!-- EFECTOS -->
-
-      <Circle fill="#d9ad26" opacity="0.06" radius="250" translateX="-700" translateY="-350" />
-
-      <Circle fill="#d9ad26" opacity="0.04" radius="180" translateX="750" translateY="420" />
-
-      <!-- CONTENIDO -->
-
-      <BorderPane style="-fx-background-color: transparent;">
-
-         <!-- ================================================= -->
-         <!-- TOP -->
-         <!-- ================================================= -->
-
-         <top>
-
-            <VBox spacing="0">
-
-               <!-- NAVBAR -->
-
-               <HBox alignment="CENTER_LEFT" prefHeight="100" spacing="25" style="                                 -fx-background-color: rgba(18,18,18,0.96);                                 -fx-border-color: rgba(217,173,38,0.15);                                 -fx-border-width: 0 0 1 0;                                 -fx-padding: 18 35 18 35;                           ">
-
-                  <effect>
-                     <DropShadow color="#000000" height="30" radius="25" width="30" />
-                  </effect>
-
-                  <!-- LOGO -->
-
-                  <StackPane>
-
-                     <Circle fill="#1f1f1f" radius="35" stroke="#d9ad26" strokeWidth="2" />
-
-                     <ImageView fitHeight="42" fitWidth="42" preserveRatio="true">
-
-                        <image>
-                           <Image url="@images/user.png" />
-                        </image>
-
-                     </ImageView>
-
-                  </StackPane>
-
-                  <!-- TITULO -->
-
-                  <VBox spacing="5">
-
-                     <Label text="MOTOSHOP">
-
-                        <font>
-                           <Font size="34" />
-                        </font>
-
-                        <style>
-                           -fx-text-fill: linear-gradient(to right, #d9ad26, #f5d76e);
-                           -fx-font-weight: bold;
-                        </style>
-
-                     </Label>
-
-                     <Label fx:id="lblUsuario" style="                                         -fx-text-fill: #bbbbbb;                                         -fx-font-size: 14;                                    " text="Usuario conectado" />
-
-                  </VBox>
-
-                  <Region HBox.hgrow="ALWAYS" />
-
-                  <!-- BUSCADOR -->
-
-                  <HBox alignment="CENTER_LEFT" spacing="12" style="                                     -fx-background-color: rgba(35,35,35,0.95);                                     -fx-background-radius: 22;                                     -fx-border-color: rgba(217,173,38,0.25);                                     -fx-border-radius: 22;                                     -fx-padding: 8 18 8 18;                               ">
-
-                     <Label style="-fx-font-size:18;" text="🔍" />
-
-                     <TextField fx:id="txtBuscar" prefWidth="260" promptText="Buscar motocicletas..." style="                                             -fx-background-color: transparent;                                             -fx-text-fill: white;                                             -fx-prompt-text-fill: #777777;                                             -fx-font-size: 15;                                        " />
-
-                  </HBox>
-
-                  <!-- BOTONES -->
-
-                  <Button onAction="#abrirTienda" style="                                     -fx-background-color: linear-gradient(to right, #d9ad26, #f0c94d);                                     -fx-text-fill: black;                                     -fx-font-size: 14;                                     -fx-font-weight: bold;                                     -fx-background-radius: 18;                                     -fx-padding: 12 24 12 24;                                     -fx-cursor: hand;                                 " text="TIENDA" />
-
-                  <Button onAction="#abrirCarrito" style="                                     -fx-background-color: #242424;                                     -fx-text-fill: #d9ad26;                                     -fx-border-color: #d9ad26;                                     -fx-border-radius: 18;                                     -fx-background-radius: 18;                                     -fx-font-size: 14;                                     -fx-font-weight: bold;                                     -fx-padding: 12 24 12 24;                                     -fx-cursor: hand;                                 " text="CARRITO" />
-
-                  <Button onAction="#abrirHistorial" style="                                     -fx-background-color: #242424;                                     -fx-text-fill: #d9ad26;                                     -fx-border-color: #d9ad26;                                     -fx-border-radius: 18;                                     -fx-background-radius: 18;                                     -fx-font-size: 14;                                     -fx-font-weight: bold;                                     -fx-padding: 12 24 12 24;                                     -fx-cursor: hand;                                 " text="HISTORIAL" />
-
-                  <Button fx:id="btnAdmin" onAction="#abrirAdminPanel" style="                                     -fx-background-color: linear-gradient(to right, #ff4444, #cc2222);                                     -fx-text-fill: white;                                     -fx-font-size: 14;                                     -fx-font-weight: bold;                                     -fx-background-radius: 18;                                     -fx-padding: 12 24 12 24;                                     -fx-cursor: hand;                                 " text="ADMIN" />
-
-               </HBox>
-
-               <!-- FILTROS + FAVORITOS -->
-
-               <HBox alignment="CENTER_LEFT" spacing="22" style="                                 -fx-background-color: rgba(24,24,24,0.96);                                 -fx-padding: 16 35 16 35;                                 -fx-border-color: rgba(255,255,255,0.04);                                 -fx-border-width: 0 0 1 0;                           ">
-
-                  <Separator orientation="VERTICAL" />
-
-                  <Label style="                                     -fx-text-fill: white;                                     -fx-font-size: 18;                                     -fx-font-weight: bold;                                " text="FILTROS" />
-
-                  <Separator orientation="VERTICAL" />
-
-                  <Label style="-fx-text-fill:#bbbbbb;" text="Precio" />
-
-                  <ComboBox fx:id="comboPrecio" onAction="#filtrarPrecio" prefWidth="180" style="                                         -fx-background-color:#252525;                                         -fx-text-fill:white;                                         -fx-background-radius:15;                                   " />
-
-                  <Label style="-fx-text-fill:#bbbbbb;" text="Cilindraje" />
-
-                  <ComboBox fx:id="comboCc" onAction="#filtrarCc" prefWidth="180" style="                                         -fx-background-color:#252525;                                         -fx-text-fill:white;                                         -fx-background-radius:15;                                   " />
-
-                  <Button onAction="#resetearCatalogo" style="                                     -fx-background-color: linear-gradient(to right, #009688, #00b3a4);                                     -fx-text-fill: white;                                     -fx-font-weight: bold;                                     -fx-background-radius: 16;                                     -fx-padding: 10 22 10 22;                                     -fx-cursor: hand;                                 " text="RESETEAR" />
-
-                  <!-- FAVORITOS -->
-
-                  <Button onAction="#abrirFavoritos" style="                                     -fx-background-color: linear-gradient(to right, #ff2d55, #ff5f7a);                                     -fx-text-fill: white;                                     -fx-font-size: 14;                                     -fx-font-weight: bold;                                     -fx-background-radius: 18;                                     -fx-padding: 10 24 10 24;                                     -fx-cursor: hand;                                 " text="❤ FAVORITOS" />
-
-               </HBox>
-
-            </VBox>
-
-         </top>
-
-         <!-- ================================================= -->
-         <!-- CENTER -->
-         <!-- ================================================= -->
-
-         <center>
-
-            <ScrollPane fitToWidth="true" pannable="true" style="                                 -fx-background:#111111;                                 -fx-background-color:transparent;                             ">
-
-               <content>
-
-                  <VBox spacing="30">
-
-                     <padding>
-                        <Insets bottom="35" left="35" right="35" top="35" />
-                     </padding>
-
-                     <!-- HEADER -->
-
-                     <VBox spacing="10">
-
-                        <HBox alignment="CENTER_LEFT" spacing="15">
-
-                           <Label style="                                                 -fx-text-fill: white;                                                 -fx-font-size: 38;                                                 -fx-font-weight: bold;                                            " text="CATÁLOGO" />
-
-                           <Label style="-fx-font-size: 32;" text="🏍" />
-
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.prueba.CatalogoController"
+           style="-fx-background-color: linear-gradient(to bottom right, #080808, #121212, #191919);">
+
+    <children>
+
+        <Circle fill="#f5c542"
+                opacity="0.04"
+                radius="250"
+                translateX="-720"
+                translateY="-360" />
+
+        <Circle fill="#2f80ed"
+                opacity="0.04"
+                radius="220"
+                translateX="760"
+                translateY="410" />
+
+        <BorderPane style="-fx-background-color: transparent;">
+
+            <top>
+                <VBox>
+
+                    <HBox alignment="CENTER_LEFT"
+                          spacing="20"
+                          style="-fx-background-color: rgba(18,18,18,0.97);
+                                 -fx-padding: 18 34 18 34;
+                                 -fx-border-color: rgba(245,197,66,0.16);
+                                 -fx-border-width: 0 0 1 0;">
+
+                        <StackPane prefHeight="58"
+                                   prefWidth="58"
+                                   style="-fx-background-color: #242424;
+                                          -fx-background-radius: 60;
+                                          -fx-border-color: #f5c542;
+                                          -fx-border-radius: 60;
+                                          -fx-border-width: 2;">
+
+                            <ImageView fitHeight="36"
+                                       fitWidth="36"
+                                       preserveRatio="true">
+                                <image>
+                                    <Image url="@images/user.png" />
+                                </image>
+                            </ImageView>
+                        </StackPane>
+
+                        <VBox spacing="3">
+                            <Label text="MOTOSHOP"
+                                   style="-fx-text-fill: #f5c542;
+                                          -fx-font-size: 32;
+                                          -fx-font-weight: bold;" />
+
+                            <Label fx:id="lblUsuario"
+                                   text="Usuario conectado"
+                                   style="-fx-text-fill: #b8b8b8;
+                                          -fx-font-size: 14;" />
+                        </VBox>
+
+                        <Region HBox.hgrow="ALWAYS" />
+
+                        <HBox alignment="CENTER_LEFT"
+                              spacing="10"
+                              prefWidth="330"
+                              style="-fx-background-color: #242424;
+                                     -fx-background-radius: 16;
+                                     -fx-border-color: #363636;
+                                     -fx-border-radius: 16;
+                                     -fx-padding: 8 14 8 14;">
+
+                            <Label text="Buscar"
+                                   style="-fx-text-fill: #f5c542;
+                                          -fx-font-size: 13;
+                                          -fx-font-weight: bold;" />
+
+                            <TextField fx:id="txtBuscar"
+                                       promptText="Nombre o marca"
+                                       HBox.hgrow="ALWAYS"
+                                       style="-fx-background-color: transparent;
+                                              -fx-text-fill: white;
+                                              -fx-prompt-text-fill: #777777;
+                                              -fx-font-size: 14;" />
                         </HBox>
 
-                        <Label style="                                             -fx-text-fill: #999999;                                             -fx-font-size: 15;                                        " text="Explora motocicletas premium deportivas, naked y superbikes." />
+                        <Button text="TIENDA"
+                                onAction="#abrirTienda"
+                                style="-fx-background-color: #f5c542;
+                                       -fx-text-fill: #111111;
+                                       -fx-font-size: 13;
+                                       -fx-font-weight: bold;
+                                       -fx-background-radius: 14;
+                                       -fx-padding: 11 22 11 22;
+                                       -fx-cursor: hand;" />
 
-                     </VBox>
+                        <Button text="CARRITO"
+                                onAction="#abrirCarrito"
+                                style="-fx-background-color: #242424;
+                                       -fx-text-fill: #f5c542;
+                                       -fx-border-color: #f5c542;
+                                       -fx-border-radius: 14;
+                                       -fx-background-radius: 14;
+                                       -fx-font-size: 13;
+                                       -fx-font-weight: bold;
+                                       -fx-padding: 11 22 11 22;
+                                       -fx-cursor: hand;" />
 
-                     <!-- FLOWPANE -->
+                        <Button text="HISTORIAL"
+                                onAction="#abrirHistorial"
+                                style="-fx-background-color: #242424;
+                                       -fx-text-fill: #f5c542;
+                                       -fx-border-color: #f5c542;
+                                       -fx-border-radius: 14;
+                                       -fx-background-radius: 14;
+                                       -fx-font-size: 13;
+                                       -fx-font-weight: bold;
+                                       -fx-padding: 11 22 11 22;
+                                       -fx-cursor: hand;" />
 
-                     <FlowPane fx:id="flowPane" alignment="TOP_CENTER" hgap="40" prefWrapLength="1650" vgap="40" />
+                        <Button text="FAVORITOS"
+                                onAction="#abrirFavoritos"
+                                style="-fx-background-color: #e63946;
+                                       -fx-text-fill: white;
+                                       -fx-font-size: 13;
+                                       -fx-font-weight: bold;
+                                       -fx-background-radius: 14;
+                                       -fx-padding: 11 22 11 22;
+                                       -fx-cursor: hand;" />
 
-                  </VBox>
+                        <Button fx:id="btnAdmin"
+                                text="ADMIN"
+                                onAction="#abrirAdminPanel"
+                                style="-fx-background-color: #2f80ed;
+                                       -fx-text-fill: white;
+                                       -fx-font-size: 13;
+                                       -fx-font-weight: bold;
+                                       -fx-background-radius: 14;
+                                       -fx-padding: 11 22 11 22;
+                                       -fx-cursor: hand;" />
+                    </HBox>
 
-               </content>
+                    <HBox alignment="CENTER_LEFT"
+                          spacing="18"
+                          style="-fx-background-color: rgba(24,24,24,0.97);
+                                 -fx-padding: 15 34 15 34;
+                                 -fx-border-color: rgba(255,255,255,0.05);
+                                 -fx-border-width: 0 0 1 0;">
 
-            </ScrollPane>
+                        <Label text="Filtros"
+                               style="-fx-text-fill: white;
+                                      -fx-font-size: 18;
+                                      -fx-font-weight: bold;" />
 
-         </center>
+                        <Label text="Precio"
+                               style="-fx-text-fill: #b8b8b8;
+                                      -fx-font-size: 13;" />
 
-      </BorderPane>
+                        <ComboBox fx:id="comboPrecio"
+                                  onAction="#filtrarPrecio"
+                                  prefWidth="190"
+                                  style="-fx-background-color: #282828;
+                                         -fx-background-radius: 12;" />
 
-   </children>
+                        <Label text="Cilindraje"
+                               style="-fx-text-fill: #b8b8b8;
+                                      -fx-font-size: 13;" />
 
+                        <ComboBox fx:id="comboCc"
+                                  onAction="#filtrarCc"
+                                  prefWidth="190"
+                                  style="-fx-background-color: #282828;
+                                         -fx-background-radius: 12;" />
+
+                        <Button text="RESETEAR"
+                                onAction="#resetearCatalogo"
+                                style="-fx-background-color: #303030;
+                                       -fx-text-fill: white;
+                                       -fx-font-size: 13;
+                                       -fx-font-weight: bold;
+                                       -fx-background-radius: 12;
+                                       -fx-padding: 9 20 9 20;
+                                       -fx-cursor: hand;" />
+
+                        <Region HBox.hgrow="ALWAYS" />
+
+                        <Label text="Inventario actualizado"
+                               style="-fx-text-fill: #777777;
+                                      -fx-font-size: 12;" />
+                    </HBox>
+                </VBox>
+            </top>
+
+            <center>
+                <ScrollPane fitToWidth="true"
+                            pannable="true"
+                            style="-fx-background: transparent;
+                                   -fx-background-color: transparent;">
+
+                    <content>
+                        <VBox alignment="TOP_CENTER"
+                              spacing="26">
+
+                            <padding>
+                                <Insets top="32"
+                                        right="36"
+                                        bottom="36"
+                                        left="36" />
+                            </padding>
+
+                            <VBox alignment="CENTER"
+                                  spacing="8">
+                                <Label text="Catalogo de motocicletas"
+                                       style="-fx-text-fill: white;
+                                              -fx-font-size: 36;
+                                              -fx-font-weight: bold;" />
+
+                                <Label text="Explora productos, revisa detalles y agrega motos a favoritos o al carrito."
+                                       style="-fx-text-fill: #a8a8a8;
+                                              -fx-font-size: 15;" />
+                            </VBox>
+
+                            <FlowPane fx:id="flowPane"
+                                      alignment="TOP_CENTER"
+                                      hgap="28"
+                                      vgap="28"
+                                      prefWrapLength="1500" />
+                        </VBox>
+                    </content>
+                </ScrollPane>
+            </center>
+
+        </BorderPane>
+
+    </children>
 </StackPane>

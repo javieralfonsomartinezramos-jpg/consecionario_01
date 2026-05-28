@@ -9,6 +9,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.text.DecimalFormat;
+
 public class DetalleMotoController {
 
     @FXML
@@ -34,8 +36,19 @@ public class DetalleMotoController {
 
     private Moto moto;
 
+    private final DecimalFormat formatoPrecio =
+            new DecimalFormat("#,##0");
+
+    @FXML
+    public void initialize() {
+
+        if (DataStore.motoSeleccionada != null) {
+            setMoto(DataStore.motoSeleccionada);
+        }
+    }
+
     // =================================================
-    // CARGAR MOTO
+    // CARGAR MOTO SELECCIONADA
     // =================================================
 
     public void setMoto(Moto moto) {
@@ -55,26 +68,51 @@ public class DetalleMotoController {
         );
 
         lblPrecio.setText(
-                "$ " + moto.getPrecio()
+                formatearPrecio(moto.getPrecio())
         );
 
-        lblStock.setText(
-                String.valueOf(
-                        moto.getStock()
-                )
-        );
+        actualizarStock();
 
         lblDescripcion.setText(
-
-                "La " + moto.getNombre()
-                        + " es una motocicleta "
-                        + moto.getMarca()
-                        + " de "
-                        + moto.getCilindraje()
-                        + " CC ideal para alto rendimiento."
+                crearDescripcion(moto)
         );
 
         cargarImagen();
+    }
+
+    // =================================================
+    // DESCRIPCION
+    // =================================================
+
+    private String crearDescripcion(Moto moto) {
+
+        String uso;
+
+        if (moto.getCilindraje() <= 300) {
+
+            uso = "ideal para ciudad, uso diario y bajo consumo";
+
+        } else if (moto.getCilindraje() <= 600) {
+
+            uso = "perfecta para quienes buscan equilibrio entre potencia, comodidad y control";
+
+        } else {
+
+            uso = "pensada para alto rendimiento, velocidad y una experiencia deportiva";
+        }
+
+        return "La " + moto.getNombre()
+                + " es una motocicleta de la marca "
+                + moto.getMarca()
+                + " con motor de "
+                + moto.getCilindraje()
+                + " CC. Es una moto "
+                + uso
+                + ". Su precio actual es "
+                + formatearPrecio(moto.getPrecio())
+                + " y cuenta con "
+                + moto.getStock()
+                + " unidades disponibles en tienda.";
     }
 
     // =================================================
@@ -104,7 +142,7 @@ public class DetalleMotoController {
             } else {
 
                 System.out.println(
-                        "No existe: " + ruta
+                        "No existe la imagen: " + ruta
                 );
             }
 
@@ -121,34 +159,69 @@ public class DetalleMotoController {
     @FXML
     public void agregarCarrito() {
 
-        if (moto.getStock() <= 0) {
+        if (moto == null) {
 
             mostrarMensaje(
-                    "Sin stock",
-                    "No hay unidades disponibles"
+                    "Error",
+                    "No hay moto seleccionada"
             );
 
             return;
         }
 
-        moto.setStock(
-                moto.getStock() - 1
-        );
+        int cantidadEnCarrito =
+                contarMotoEnCarrito(moto);
+
+        if (moto.getStock() <= 0
+                || cantidadEnCarrito >= moto.getStock()) {
+
+            mostrarMensaje(
+                    "Sin stock",
+                    "No hay mas unidades disponibles para agregar"
+            );
+
+            return;
+        }
 
         DataStore.carrito.add(moto);
 
         DataStore.historial.push(moto);
 
-        lblStock.setText(
-                String.valueOf(
-                        moto.getStock()
-                )
-        );
+        actualizarStock();
 
         mostrarMensaje(
                 "Carrito",
                 moto.getNombre()
                         + " agregado al carrito"
+        );
+    }
+
+    private int contarMotoEnCarrito(Moto motoBuscada) {
+
+        int contador = 0;
+
+        for (Moto item : DataStore.carrito) {
+
+            if (item.getNombre()
+                    .equalsIgnoreCase(
+                            motoBuscada.getNombre()
+                    )) {
+
+                contador++;
+            }
+        }
+
+        return contador;
+    }
+
+    private void actualizarStock() {
+
+        int disponibles =
+                moto.getStock()
+                        - contarMotoEnCarrito(moto);
+
+        lblStock.setText(
+                String.valueOf(disponibles)
         );
     }
 
@@ -158,6 +231,26 @@ public class DetalleMotoController {
 
     @FXML
     public void agregarFavorito() {
+
+        if (moto == null) {
+            return;
+        }
+
+        for (Moto favorita : DataStore.favoritos) {
+
+            if (favorita.getNombre()
+                    .equalsIgnoreCase(
+                            moto.getNombre()
+                    )) {
+
+                mostrarMensaje(
+                        "Favoritos",
+                        "La moto ya esta en favoritos"
+                );
+
+                return;
+            }
+        }
 
         DataStore.favoritos.add(moto);
 
@@ -169,18 +262,37 @@ public class DetalleMotoController {
     }
 
     // =================================================
+    // ABRIR CARRITO
+    // =================================================
+
+    @FXML
+    public void abrirCarrito() {
+
+        abrirVentana("carrito.fxml");
+    }
+
+    // =================================================
     // VOLVER
     // =================================================
 
     @FXML
     public void volverCatalogo() {
 
+        abrirVentana("catalogo.fxml");
+    }
+
+    // =================================================
+    // VENTANAS
+    // =================================================
+
+    private void abrirVentana(String archivo) {
+
         try {
 
             FXMLLoader loader =
                     new FXMLLoader(
                             getClass().getResource(
-                                    "catalogo.fxml"
+                                    archivo
                             )
                     );
 
@@ -201,7 +313,21 @@ public class DetalleMotoController {
         } catch (Exception e) {
 
             e.printStackTrace();
+
+            mostrarMensaje(
+                    "Error",
+                    "No se pudo abrir " + archivo
+            );
         }
+    }
+
+    // =================================================
+    // PRECIO
+    // =================================================
+
+    private String formatearPrecio(double precio) {
+
+        return "$" + formatoPrecio.format(precio);
     }
 
     // =================================================

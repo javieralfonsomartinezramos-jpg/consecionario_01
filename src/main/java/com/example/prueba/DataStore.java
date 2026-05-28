@@ -7,6 +7,13 @@ import java.util.Stack;
 public class DataStore {
 
     // =========================
+    // CATALOGO
+    // =========================
+
+    public static List<Moto> motos =
+            new ArrayList<>();
+
+    // =========================
     // CARRITO
     // =========================
 

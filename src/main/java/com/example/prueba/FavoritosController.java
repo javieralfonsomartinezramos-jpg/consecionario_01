@@ -230,7 +230,7 @@ public class FavoritosController {
 
             stage.setScene(scene);
 
-            stage.setFullScreen(true);
+            stage.setMaximized(true);
 
             stage.show();
 

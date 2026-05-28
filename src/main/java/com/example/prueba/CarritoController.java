@@ -1,24 +1,20 @@
 package com.example.prueba;
 
+import archivos.txt.ArchivoMotos;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DecimalFormat;
 
 public class CarritoController {
-
-    // =====================================
-    // LISTA DEL CARRITO
-    // =====================================
-
-    public static List<Moto> carrito =
-            new ArrayList<>();
 
     // =====================================
     // FXML
@@ -29,6 +25,9 @@ public class CarritoController {
 
     @FXML
     private Label lblTotal;
+
+    private final DecimalFormat formatoPrecio =
+            new DecimalFormat("#,##0");
 
     // =====================================
     // INITIALIZE
@@ -52,17 +51,18 @@ public class CarritoController {
 
         double total = 0;
 
-        if (carrito.isEmpty()) {
+        if (DataStore.carrito.isEmpty()) {
 
             Label vacio =
                     new Label(
-                            "El carrito está vacío"
+                            "El carrito esta vacio"
                     );
 
             vacio.setStyle("""
 
                     -fx-text-fill: white;
                     -fx-font-size: 24;
+                    -fx-font-weight: bold;
 
                     """);
 
@@ -71,16 +71,20 @@ public class CarritoController {
                     .add(vacio);
 
             lblTotal.setText(
-                    "TOTAL: $0"
+                    "TOTAL: " + formatearPrecio(0)
             );
 
             return;
         }
 
-        for (Moto moto : carrito) {
+        for (Moto moto : DataStore.carrito) {
 
             VBox card =
                     new VBox(10);
+
+            card.setMaxWidth(760);
+
+            card.setPrefWidth(760);
 
             card.setStyle("""
 
@@ -140,24 +144,56 @@ public class CarritoController {
 
             Label precio =
                     new Label(
-                            "$ "
-                                    + moto.getPrecio()
+                            formatearPrecio(
+                                    moto.getPrecio()
+                            )
                     );
 
             precio.setStyle("""
 
-                    -fx-text-fill: #d9ad26;
+                    -fx-text-fill: #f5c542;
                     -fx-font-size: 24;
                     -fx-font-weight: bold;
 
                     """);
+
+            Button eliminar =
+                    new Button("Eliminar");
+
+            eliminar.setStyle("""
+
+                    -fx-background-color: #e63946;
+                    -fx-text-fill: white;
+                    -fx-font-size: 14;
+                    -fx-font-weight: bold;
+                    -fx-background-radius: 12;
+                    -fx-cursor: hand;
+
+                    """);
+
+            eliminar.setOnAction(e -> {
+
+                DataStore.carrito.remove(moto);
+
+                mostrarCarrito();
+            });
+
+            HBox filaPrecio =
+                    new HBox(15);
+
+            filaPrecio.setAlignment(Pos.CENTER_LEFT);
+
+            filaPrecio.getChildren().addAll(
+                    precio,
+                    eliminar
+            );
 
             card.getChildren().addAll(
 
                     nombre,
                     marca,
                     cc,
-                    precio
+                    filaPrecio
             );
 
             contenedorCarrito
@@ -168,7 +204,7 @@ public class CarritoController {
         }
 
         lblTotal.setText(
-                "TOTAL: $" + total
+                "TOTAL: " + formatearPrecio(total)
         );
     }
 
@@ -179,7 +215,7 @@ public class CarritoController {
     @FXML
     public void comprarTodo() {
 
-        if (carrito.isEmpty()) {
+        if (DataStore.carrito.isEmpty()) {
 
             mostrarMensaje(
                     "Carrito",
@@ -189,7 +225,32 @@ public class CarritoController {
             return;
         }
 
-        carrito.clear();
+        for (Moto moto : DataStore.carrito) {
+
+            if (moto.getStock() <= 0) {
+
+                mostrarMensaje(
+                        "Sin stock",
+                        "No hay unidades disponibles para "
+                                + moto.getNombre()
+                );
+
+                return;
+            }
+        }
+
+        for (Moto moto : DataStore.carrito) {
+
+            moto.setStock(
+                    moto.getStock() - 1
+            );
+        }
+
+        ArchivoMotos.guardarTodasLasMotos(
+                DataStore.motos
+        );
+
+        DataStore.carrito.clear();
 
         mostrarCarrito();
 
@@ -206,7 +267,7 @@ public class CarritoController {
     @FXML
     public void vaciarCarrito() {
 
-        carrito.clear();
+        DataStore.carrito.clear();
 
         mostrarCarrito();
 
@@ -242,7 +303,7 @@ public class CarritoController {
 
             stage.setScene(scene);
 
-            stage.setFullScreen(true);
+            stage.setMaximized(true);
 
             stage.show();
 
@@ -250,6 +311,15 @@ public class CarritoController {
 
             e.printStackTrace();
         }
+    }
+
+    // =====================================
+    // PRECIO
+    // =====================================
+
+    private String formatearPrecio(double precio) {
+
+        return "$" + formatoPrecio.format(precio);
     }
 
     // =====================================

@@ -2,8 +2,17 @@ package com.example.prueba;
 
 import archivos.txt.ArchivoMotos;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class adminPanelController {
@@ -30,6 +39,35 @@ public class adminPanelController {
     @FXML
     private TextField txtImagen;
 
+    @FXML
+    private TableView<Moto> tablaMotos;
+
+    @FXML
+    private TableColumn<Moto, String> colNombre;
+
+    @FXML
+    private TableColumn<Moto, String> colMarca;
+
+    @FXML
+    private TableColumn<Moto, Integer> colCc;
+
+    @FXML
+    private TableColumn<Moto, Double> colPrecio;
+
+    @FXML
+    private TableColumn<Moto, Integer> colStock;
+
+    @FXML
+    private TableColumn<Moto, String> colImagen;
+
+    @FXML
+    private Button btnGuardar;
+
+    private final ObservableList<Moto> motosTabla =
+            FXCollections.observableArrayList();
+
+    private Moto motoEditando;
+
     // =========================
     // INITIALIZE
     // =========================
@@ -48,40 +86,184 @@ public class adminPanelController {
                         "BMW",
                         "Ducati",
                         "KTM",
-                        "Bajaj"
+                        "Bajaj",
+                        "Otro"
 
                 )
         );
+
+        configurarTabla();
+
+        cargarMotos();
+    }
+
+    private void configurarTabla() {
+
+        colNombre.setCellValueFactory(
+                new PropertyValueFactory<>("nombre")
+        );
+
+        colMarca.setCellValueFactory(
+                new PropertyValueFactory<>("marca")
+        );
+
+        colCc.setCellValueFactory(
+                new PropertyValueFactory<>("cilindraje")
+        );
+
+        colPrecio.setCellValueFactory(
+                new PropertyValueFactory<>("precio")
+        );
+
+        colStock.setCellValueFactory(
+                new PropertyValueFactory<>("stock")
+        );
+
+        colImagen.setCellValueFactory(
+                new PropertyValueFactory<>("imagen")
+        );
+
+        tablaMotos.setItems(motosTabla);
+
+        tablaMotos.getSelectionModel()
+                .selectedItemProperty()
+                .addListener(
+                        (observable, anterior, seleccionada) -> {
+
+                            if (seleccionada != null) {
+                                cargarMotoEnFormulario(seleccionada);
+                            }
+                        }
+                );
+    }
+
+    private void cargarMotos() {
+
+        if (DataStore.motos.isEmpty()) {
+            DataStore.motos.addAll(
+                    ArchivoMotos.cargarMotos()
+            );
+        }
+
+        motosTabla.setAll(DataStore.motos);
     }
 
     // =========================
-    // GUARDAR MOTO
+    // GUARDAR / EDITAR MOTO
     // =========================
 
     @FXML
     public void guardarMoto() {
 
         String nombre =
-                txtNombre.getText();
+                txtNombre.getText().trim();
 
         String marca =
                 comboMarca.getValue();
 
         String ccTexto =
-                txtCc.getText();
+                txtCc.getText().trim();
 
         String precioTexto =
-                txtPrecio.getText();
+                limpiarNumero(
+                        txtPrecio.getText()
+                );
 
         String stockTexto =
-                txtStock.getText();
+                txtStock.getText().trim();
 
         String imagen =
-                txtImagen.getText();
+                txtImagen.getText().trim();
 
-        // =========================
-        // VALIDAR CAMPOS
-        // =========================
+        if (!validarCampos(
+                nombre,
+                marca,
+                ccTexto,
+                precioTexto,
+                stockTexto,
+                imagen
+        )) {
+            return;
+        }
+
+        int cc =
+                Integer.parseInt(ccTexto);
+
+        double precio =
+                Double.parseDouble(precioTexto);
+
+        int stock =
+                Integer.parseInt(stockTexto);
+
+        if (motoEditando == null
+                && existeMoto(nombre)) {
+
+            mostrarMensaje(
+                    "Producto repetido",
+                    "Ya existe una moto con ese nombre"
+            );
+
+            return;
+        }
+
+        if (motoEditando != null
+                && existeOtraMoto(nombre, motoEditando)) {
+
+            mostrarMensaje(
+                    "Producto repetido",
+                    "Ya existe otra moto con ese nombre"
+            );
+
+            return;
+        }
+
+        if (motoEditando == null) {
+
+            Moto nuevaMoto =
+                    new Moto(
+                            nombre,
+                            marca,
+                            cc,
+                            precio,
+                            stock,
+                            imagen
+                    );
+
+            DataStore.motos.add(nuevaMoto);
+
+            mostrarMensaje(
+                    "Exito",
+                    "Moto agregada correctamente"
+            );
+
+        } else {
+
+            motoEditando.setNombre(nombre);
+            motoEditando.setMarca(marca);
+            motoEditando.setCilindraje(cc);
+            motoEditando.setPrecio(precio);
+            motoEditando.setStock(stock);
+            motoEditando.setImagen(imagen);
+
+            mostrarMensaje(
+                    "Exito",
+                    "Moto actualizada correctamente"
+            );
+        }
+
+        guardarCambios();
+
+        limpiarCamposFormulario();
+    }
+
+    private boolean validarCampos(
+            String nombre,
+            String marca,
+            String ccTexto,
+            String precioTexto,
+            String stockTexto,
+            String imagen
+    ) {
 
         if (nombre.isEmpty()
                 || marca == null
@@ -95,85 +277,201 @@ public class adminPanelController {
                     "Completa todos los campos"
             );
 
-            return;
+            return false;
         }
 
-        // =========================
-        // VALIDAR NUMEROS
-        // =========================
+        if (nombre.contains(",")
+                || marca.contains(",")
+                || imagen.contains(",")) {
+
+            mostrarMensaje(
+                    "Error",
+                    "No uses comas en nombre, marca o imagen"
+            );
+
+            return false;
+        }
 
         if (!ccTexto.matches("\\d+")
-                || !precioTexto.matches("\\d+")
+                || !precioTexto.matches("\\d+(\\.\\d+)?")
                 || !stockTexto.matches("\\d+")) {
 
             mostrarMensaje(
                     "Error",
-                    "CC, precio y stock deben ser numéricos"
+                    "Cilindraje, precio y stock deben ser numericos"
+            );
+
+            return false;
+        }
+
+        if (Integer.parseInt(ccTexto) <= 0
+                || Double.parseDouble(precioTexto) <= 0
+                || Integer.parseInt(stockTexto) < 0) {
+
+            mostrarMensaje(
+                    "Error",
+                    "Cilindraje y precio deben ser mayores a 0"
+            );
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private String limpiarNumero(String texto) {
+
+        return texto
+                .trim()
+                .replace("$", "")
+                .replace(" ", "")
+                .replace(",", "");
+    }
+
+    private boolean existeMoto(String nombre) {
+
+        for (Moto moto : DataStore.motos) {
+
+            if (moto.getNombre()
+                    .equalsIgnoreCase(nombre)) {
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean existeOtraMoto(String nombre, Moto actual) {
+
+        for (Moto moto : DataStore.motos) {
+
+            if (moto != actual
+                    && moto.getNombre()
+                    .equalsIgnoreCase(nombre)) {
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void guardarCambios() {
+
+        ArchivoMotos.guardarTodasLasMotos(
+                DataStore.motos
+        );
+
+        motosTabla.setAll(DataStore.motos);
+
+        tablaMotos.refresh();
+    }
+
+    // =========================
+    // SELECCIONAR / ELIMINAR
+    // =========================
+
+    private void cargarMotoEnFormulario(Moto moto) {
+
+        motoEditando = moto;
+
+        txtNombre.setText(
+                moto.getNombre()
+        );
+
+        comboMarca.setValue(
+                moto.getMarca()
+        );
+
+        txtCc.setText(
+                String.valueOf(
+                        moto.getCilindraje()
+                )
+        );
+
+        txtPrecio.setText(
+                String.valueOf(
+                        moto.getPrecio()
+                )
+        );
+
+        txtStock.setText(
+                String.valueOf(
+                        moto.getStock()
+                )
+        );
+
+        txtImagen.setText(
+                moto.getImagen()
+        );
+
+        btnGuardar.setText(
+                "ACTUALIZAR PRODUCTO"
+        );
+    }
+
+    @FXML
+    public void eliminarMoto() {
+
+        Moto seleccionada =
+                tablaMotos.getSelectionModel()
+                        .getSelectedItem();
+
+        if (seleccionada == null) {
+
+            mostrarMensaje(
+                    "Selecciona una moto",
+                    "Elige un producto de la tabla para eliminarlo"
             );
 
             return;
         }
 
-        // =========================
-        // CONVERSIONES
-        // =========================
+        DataStore.motos.remove(seleccionada);
 
-        int cc =
-                Integer.parseInt(ccTexto);
-
-        double precio =
-                Double.parseDouble(precioTexto);
-
-        int stock =
-                Integer.parseInt(stockTexto);
-
-        // =========================
-        // CREAR MOTO
-        // =========================
-
-        Moto nuevaMoto =
-
-                new Moto(
-
-                        nombre,
-                        marca,
-                        cc,
-                        precio,
-                        stock,
-                        imagen
-
-                );
-
-        // =========================
-        // GUARDAR
-        // =========================
-
-        ArchivoMotos.guardarMoto(
-                nuevaMoto,
-                imagen
+        DataStore.carrito.removeIf(
+                moto -> moto.getNombre()
+                        .equalsIgnoreCase(
+                                seleccionada.getNombre()
+                        )
         );
 
-        // =========================
-        // MENSAJE
-        // =========================
+        DataStore.favoritos.removeIf(
+                moto -> moto.getNombre()
+                        .equalsIgnoreCase(
+                                seleccionada.getNombre()
+                        )
+        );
+
+        DataStore.historial.removeIf(
+                moto -> moto.getNombre()
+                        .equalsIgnoreCase(
+                                seleccionada.getNombre()
+                        )
+        );
+
+        guardarCambios();
+
+        limpiarCamposFormulario();
 
         mostrarMensaje(
-                "Éxito",
-                "Moto agregada correctamente"
+                "Eliminado",
+                "Moto eliminada del catalogo"
         );
-
-        // =========================
-        // LIMPIAR
-        // =========================
-
-        limpiarCampos();
     }
 
     // =========================
     // LIMPIAR
     // =========================
 
-    private void limpiarCampos() {
+    @FXML
+    public void limpiarCamposFormulario() {
+
+        motoEditando = null;
+
+        tablaMotos.getSelectionModel()
+                .clearSelection();
 
         txtNombre.clear();
 
@@ -186,22 +484,51 @@ public class adminPanelController {
         txtStock.clear();
 
         txtImagen.clear();
+
+        btnGuardar.setText(
+                "GUARDAR PRODUCTO"
+        );
     }
 
     // =========================
-    // CERRAR
+    // VOLVER
     // =========================
 
     @FXML
-    public void cerrarVentana() {
+    public void volverCatalogo() {
 
-        Stage stage =
+        try {
 
-                (Stage) txtNombre
-                        .getScene()
-                        .getWindow();
+            FXMLLoader loader =
+                    new FXMLLoader(
+                            getClass().getResource(
+                                    "catalogo.fxml"
+                            )
+                    );
 
-        stage.close();
+            Scene scene =
+                    new Scene(loader.load());
+
+            Stage stage =
+                    (Stage) txtNombre
+                            .getScene()
+                            .getWindow();
+
+            stage.setScene(scene);
+
+            stage.setMaximized(true);
+
+            stage.show();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            mostrarMensaje(
+                    "Error",
+                    "No se pudo volver al catalogo"
+            );
+        }
     }
 
     // =========================
@@ -214,7 +541,6 @@ public class adminPanelController {
     ) {
 
         Alert alert =
-
                 new Alert(
                         Alert.AlertType.INFORMATION
                 );
