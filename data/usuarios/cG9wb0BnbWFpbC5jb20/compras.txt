@@ -1,0 +1,3 @@
+COMPRA|fecha=2026-05-28 12:42:15|total=6500.0
+ITEM|nombre=Kawasaki Ninja 400|marca=Kawasaki|cc=400|precio=6500.0
+FIN|cantidad=1

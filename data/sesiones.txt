@@ -1,0 +1,22 @@
+LOGIN|fecha=2026-05-28 01:07:03|tipo=usuario|nombre=javi|correo=javier@gmail.com
+LOGOUT|fecha=2026-05-28 01:07:15|tipo=usuario|nombre=javi|correo=javier@gmail.com
+LOGIN|fecha=2026-05-28 01:07:33|tipo=usuario|nombre=javi|correo=javier@gmail.com
+LOGOUT|fecha=2026-05-28 01:09:20|tipo=usuario|nombre=javi|correo=javier@gmail.com
+LOGIN|fecha=2026-05-28 01:16:54|tipo=usuario|nombre=javi|correo=javier@gmail.com
+LOGIN|fecha=2026-05-28 02:49:49|tipo=usuario|nombre=javi|correo=javier@gmail.com
+LOGIN|fecha=2026-05-28 10:22:55|tipo=usuario|nombre=javi|correo=javier@gmail.com
+LOGIN|fecha=2026-05-28 10:24:08|tipo=usuario|nombre=javi|correo=javier@gmail.com
+LOGIN|fecha=2026-05-28 11:30:45|tipo=usuario|nombre=ñañelover|correo=lover67@gmail.com
+LOGOUT|fecha=2026-05-28 11:32:04|tipo=usuario|nombre=ñañelover|correo=lover67@gmail.com
+LOGIN|fecha=2026-05-28 11:32:21|tipo=usuario|nombre=javi|correo=javier@gmail.com
+LOGOUT|fecha=2026-05-28 11:32:46|tipo=usuario|nombre=javi|correo=javier@gmail.com
+LOGIN|fecha=2026-05-28 11:32:54|tipo=usuario|nombre=javi|correo=javier@gmail.com
+LOGOUT|fecha=2026-05-28 11:34:54|tipo=usuario|nombre=javi|correo=javier@gmail.com
+LOGIN|fecha=2026-05-28 11:35:07|tipo=admin|nombre=admin|correo=admin@gmail.com
+LOGIN|fecha=2026-05-28 11:41:36|tipo=usuario|nombre=javi|correo=javier@gmail.com
+LOGOUT|fecha=2026-05-28 12:37:25|tipo=usuario|nombre=javi|correo=javier@gmail.com
+LOGIN|fecha=2026-05-28 12:39:44|tipo=usuario|nombre=jose|correo=popo@gmail.com
+LOGOUT|fecha=2026-05-28 12:44:05|tipo=usuario|nombre=jose|correo=popo@gmail.com
+LOGIN|fecha=2026-05-28 12:46:33|tipo=usuario|nombre=javi|correo=javier@gmail.com
+LOGIN|fecha=2026-05-28 13:54:20|tipo=usuario|nombre=Angela|correo=a@gmail.com
+LOGIN|fecha=2026-05-29 07:34:36|tipo=usuario|nombre=Jhoan estiven|correo=urvinastivencausil@gmail.com

@@ -1,0 +1,15 @@
+COMPRA|fecha=2026-05-28 01:08:57|total=6500.0
+ITEM|nombre=Kawasaki Ninja 400|marca=Kawasaki|cc=400|precio=6500.0
+FIN|cantidad=1
+COMPRA|fecha=2026-05-28 01:18:41|total=18000.0
+ITEM|nombre=Yamaha R1|marca=Yamaha|cc=1000|precio=18000.0
+FIN|cantidad=1
+COMPRA|fecha=2026-05-28 02:50:16|total=15500.0
+ITEM|nombre=Suzuki GSX-R 1000|marca=Suzuki|cc=1000|precio=15500.0
+FIN|cantidad=1
+COMPRA|fecha=2026-05-28 10:25:27|total=35000.0
+ITEM|nombre=BMW M 1000 RR|marca=BMW|cc=1000|precio=35000.0
+FIN|cantidad=1
+COMPRA|fecha=2026-05-28 11:34:09|total=5000.0
+ITEM|nombre=Yamaha MT 15|marca=Yamaha|cc=155|precio=5000.0
+FIN|cantidad=1
