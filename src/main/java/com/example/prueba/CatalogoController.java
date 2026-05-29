@@ -1,6 +1,7 @@
 package com.example.prueba;
 
 import archivos.txt.ArchivoMotos;
+import archivos.txt.ArchivoSesiones;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -47,15 +48,17 @@ public class CatalogoController {
         configurarCatalogoVisual();
 
         cargarMotos();
+        DataStore.cargarDatosUsuario();
         cargarFiltros();
-        mostrarMotos(listaMotos);
+        aplicarPreferenciasUsuario();
+        actualizarCatalogo();
 
         txtBuscar.textProperty().addListener(
-                (observable, oldValue, newValue) -> actualizarCatalogo()
+                (observable, oldValue, newValue) -> actualizarCatalogoYGuardar()
         );
 
-        comboPrecio.setOnAction(e -> actualizarCatalogo());
-        comboCc.setOnAction(e -> actualizarCatalogo());
+        comboPrecio.setOnAction(e -> actualizarCatalogoYGuardar());
+        comboCc.setOnAction(e -> actualizarCatalogoYGuardar());
     }
 
     private void configurarUsuario() {
@@ -88,7 +91,7 @@ public class CatalogoController {
         DataStore.motos.addAll(ArchivoMotos.cargarMotos());
 
         listaMotos.clear();
-        listaMotos.addAll(DataStore.motos);
+        listaMotos.addAll(DataStore.motos.toList());
     }
 
     private List<Moto> crearMotosIniciales() {
@@ -125,6 +128,29 @@ public class CatalogoController {
                 "Media (301-500)",
                 "Alta (501-1000)"
         );
+    }
+
+    private void aplicarPreferenciasUsuario() {
+        PreferenciasUsuario preferencias = DataStore.preferencias;
+
+        if (!preferencias.getBusqueda().isEmpty()) {
+            txtBuscar.setText(preferencias.getBusqueda());
+        }
+
+        if (comboPrecio.getItems().contains(preferencias.getFiltroPrecio())) {
+            comboPrecio.setValue(preferencias.getFiltroPrecio());
+        }
+
+        if (comboCc.getItems().contains(preferencias.getFiltroCc())) {
+            comboCc.setValue(preferencias.getFiltroCc());
+        }
+    }
+
+    private void guardarPreferenciasActuales() {
+        DataStore.preferencias.setBusqueda(txtBuscar.getText());
+        DataStore.preferencias.setFiltroPrecio(comboPrecio.getValue());
+        DataStore.preferencias.setFiltroCc(comboCc.getValue());
+        DataStore.guardarPreferenciasUsuario();
     }
 
     private void mostrarMotos(List<Moto> motos) {
@@ -250,6 +276,8 @@ public class CatalogoController {
                 botones
         );
 
+        UI.aplicarHoverElevado(card);
+
         return card;
     }
 
@@ -300,13 +328,12 @@ public class CatalogoController {
     private void abrirDetalleMoto(Moto moto) {
         try {
             DataStore.motoSeleccionada = moto;
-            DataStore.historial.push(moto);
 
             FXMLLoader loader =
                     new FXMLLoader(getClass().getResource("detallemoto.fxml"));
 
             Scene scene =
-                    new Scene(loader.load());
+                    UI.crearEscena(loader.load());
 
             DetalleMotoController controller =
                     loader.getController();
@@ -316,9 +343,7 @@ public class CatalogoController {
             Stage stage =
                     (Stage) flowPane.getScene().getWindow();
 
-            stage.setScene(scene);
-            stage.setMaximized(true);
-            stage.show();
+            UI.mostrarMaximizado(stage, scene);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -332,9 +357,7 @@ public class CatalogoController {
     }
 
     private void agregarFavorito(Moto moto) {
-        if (!existeEnFavoritos(moto)) {
-            DataStore.favoritos.add(moto);
-
+        if (DataStore.agregarFavorito(moto)) {
             mostrarMensaje(
                     "Favoritos",
                     moto.getNombre() + " agregado a favoritos"
@@ -348,13 +371,12 @@ public class CatalogoController {
     }
 
     private boolean existeEnFavoritos(Moto moto) {
-        for (Moto favorita : DataStore.favoritos) {
-            if (favorita.getNombre().equalsIgnoreCase(moto.getNombre())) {
-                return true;
-            }
-        }
+        return DataStore.existeEnFavoritos(moto);
+    }
 
-        return false;
+    private void actualizarCatalogoYGuardar() {
+        guardarPreferenciasActuales();
+        actualizarCatalogo();
     }
 
     private void actualizarCatalogo() {
@@ -451,6 +473,7 @@ public class CatalogoController {
         comboPrecio.setValue(null);
         comboCc.setValue(null);
         txtBuscar.clear();
+        guardarPreferenciasActuales();
 
         mostrarMotos(listaMotos);
     }
@@ -492,6 +515,18 @@ public class CatalogoController {
         abrirVentana("adminPanel.fxml");
     }
 
+    @FXML
+    public void cerrarSesion() {
+        DataStore.guardarDatosUsuario();
+        ArchivoSesiones.registrarCierre(
+                Session.usuarioActual,
+                Session.esAdmin()
+        );
+        DataStore.limpiarDatosSesion();
+        Session.cerrarSesion();
+        abrirVentana("hello-view.fxml");
+    }
+
     private void abrirVentana(String archivo) {
         try {
             FXMLLoader loader =
@@ -506,14 +541,12 @@ public class CatalogoController {
                 return;
             }
 
-            Scene scene = new Scene(loader.load());
+            Scene scene = UI.crearEscena(loader.load());
 
             Stage stage =
                     (Stage) flowPane.getScene().getWindow();
 
-            stage.setScene(scene);
-            stage.setMaximized(true);
-            stage.show();
+            UI.mostrarMaximizado(stage, scene);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -86,33 +86,79 @@ public class DetalleMotoController {
 
     private String crearDescripcion(Moto moto) {
 
-        String uso;
+        String nombreNormalizado =
+                moto.getNombre().toLowerCase();
 
-        if (moto.getCilindraje() <= 300) {
-
-            uso = "ideal para ciudad, uso diario y bajo consumo";
-
-        } else if (moto.getCilindraje() <= 600) {
-
-            uso = "perfecta para quienes buscan equilibrio entre potencia, comodidad y control";
-
-        } else {
-
-            uso = "pensada para alto rendimiento, velocidad y una experiencia deportiva";
+        if (nombreNormalizado.contains("mt 07")) {
+            return "Ligera, fuerte y muy facil de llevar. La MT 07 combina respuesta inmediata con una postura comoda, perfecta para ciudad, salidas de fin de semana y para quien busca una naked con caracter sin complicarse.";
         }
 
-        return "La " + moto.getNombre()
-                + " es una motocicleta de la marca "
-                + moto.getMarca()
-                + " con motor de "
-                + moto.getCilindraje()
-                + " CC. Es una moto "
-                + uso
-                + ". Su precio actual es "
-                + formatearPrecio(moto.getPrecio())
-                + " y cuenta con "
-                + moto.getStock()
-                + " unidades disponibles en tienda.";
+        if (nombreNormalizado.contains("r1")) {
+            return "Una deportiva de alto nivel, hecha para sentir precision desde el primer giro del acelerador. La R1 destaca por su entrega agresiva, posicion de manejo deportiva y una presencia que no pasa desapercibida.";
+        }
+
+        if (nombreNormalizado.contains("cbr 600")) {
+            return "Equilibrada, rapida y muy tecnica. Esta CBR mantiene el espiritu deportivo de Honda con una conduccion precisa, buen control en curva y potencia suficiente para disfrutar cada tramo.";
+        }
+
+        if (nombreNormalizado.contains("cbr 1000")) {
+            return "Potencia seria con una respuesta muy cuidada. La CBR 1000RR esta pensada para quienes quieren una superbike con caracter, tecnologia y una sensacion de manejo firme en todo momento.";
+        }
+
+        if (nombreNormalizado.contains("ninja 400")) {
+            return "Una deportiva liviana que se siente agil desde el primer dia. La Ninja 400 es ideal para subir de nivel, con buena potencia, postura comoda y una imagen claramente racing.";
+        }
+
+        if (nombreNormalizado.contains("z650")) {
+            return "Naked practica, compacta y con buena fuerza en medios. La Z650 funciona muy bien para uso diario, pero tambien responde cuando quieres una salida con ritmo.";
+        }
+
+        if (nombreNormalizado.contains("mt 15")) {
+            return "Compacta, economica y con estilo urbano. La MT 15 es una buena companera para moverse rapido por la ciudad sin perder ese look agresivo de la familia MT.";
+        }
+
+        if (nombreNormalizado.contains("gsx-r 1000")) {
+            return "Deportiva pura, con una entrega de potencia contundente y una postura enfocada en rendimiento. La GSX-R 1000 es para quien busca sensaciones fuertes y manejo preciso.";
+        }
+
+        if (nombreNormalizado.contains("gixxer")) {
+            return "Deportiva de baja cilindrada con buena presencia y consumo contenido. La Gixxer SF 250 se siente practica para el dia a dia y atractiva para quienes quieren estilo sport.";
+        }
+
+        if (nombreNormalizado.contains("pulsar")) {
+            return "Una moto versatil, confiable y facil de mantener. La Pulsar NS 200 tiene buena respuesta para ciudad, postura comoda y el toque deportivo justo para disfrutarla todos los dias.";
+        }
+
+        if (nombreNormalizado.contains("m 1000")) {
+            return "Una maquina enfocada en rendimiento, con presencia premium y ADN de pista. La BMW M 1000 RR esta hecha para quien busca exclusividad, potencia y tecnologia de alto nivel.";
+        }
+
+        if (nombreNormalizado.contains("cbf 125")) {
+            return "Sencilla, rendidora y perfecta para moverse todos los dias. La CBF 125 prioriza bajo consumo, comodidad y mantenimiento facil, sin perder la confianza de Honda.";
+        }
+
+        if (nombreNormalizado.contains("rc 390")) {
+            return "Ligera, afilada y con actitud deportiva. La KTM RC 390 ofrece una conduccion divertida, buen empuje y una posicion pensada para quienes disfrutan manejar con precision.";
+        }
+
+        if (nombreNormalizado.contains("yzf r3")) {
+            return "Deportiva accesible, suave y muy entretenida. La YZF R3 combina diseno racing con una respuesta progresiva, ideal para aprender, mejorar y disfrutar rutas con confianza.";
+        }
+
+        return crearDescripcionGenerica(moto);
+    }
+
+    private String crearDescripcionGenerica(Moto moto) {
+
+        if (moto.getCilindraje() <= 300) {
+            return "Una opcion practica para moverse a diario, con consumo contenido, manejo sencillo y una presencia que se defiende muy bien en ciudad.";
+        }
+
+        if (moto.getCilindraje() <= 650) {
+            return "Buen equilibrio entre potencia, comodidad y control. Es una moto pensada para quienes quieren usarla seguido, pero tambien disfrutarla cuando el camino se abre.";
+        }
+
+        return "Una propuesta de alto rendimiento, con fuerza de sobra y una conduccion pensada para quienes buscan sensaciones deportivas y mayor presencia en carretera.";
     }
 
     // =================================================
@@ -170,7 +216,7 @@ public class DetalleMotoController {
         }
 
         int cantidadEnCarrito =
-                contarMotoEnCarrito(moto);
+                DataStore.contarEnCarrito(moto);
 
         if (moto.getStock() <= 0
                 || cantidadEnCarrito >= moto.getStock()) {
@@ -183,9 +229,7 @@ public class DetalleMotoController {
             return;
         }
 
-        DataStore.carrito.add(moto);
-
-        DataStore.historial.push(moto);
+        DataStore.agregarCarrito(moto);
 
         actualizarStock();
 
@@ -197,21 +241,7 @@ public class DetalleMotoController {
     }
 
     private int contarMotoEnCarrito(Moto motoBuscada) {
-
-        int contador = 0;
-
-        for (Moto item : DataStore.carrito) {
-
-            if (item.getNombre()
-                    .equalsIgnoreCase(
-                            motoBuscada.getNombre()
-                    )) {
-
-                contador++;
-            }
-        }
-
-        return contador;
+        return DataStore.contarEnCarrito(motoBuscada);
     }
 
     private void actualizarStock() {
@@ -236,29 +266,18 @@ public class DetalleMotoController {
             return;
         }
 
-        for (Moto favorita : DataStore.favoritos) {
-
-            if (favorita.getNombre()
-                    .equalsIgnoreCase(
-                            moto.getNombre()
-                    )) {
-
-                mostrarMensaje(
-                        "Favoritos",
-                        "La moto ya esta en favoritos"
-                );
-
-                return;
-            }
+        if (DataStore.agregarFavorito(moto)) {
+            mostrarMensaje(
+                    "Favoritos",
+                    moto.getNombre()
+                            + " agregado a favoritos"
+            );
+        } else {
+            mostrarMensaje(
+                    "Favoritos",
+                    "La moto ya esta en favoritos"
+            );
         }
-
-        DataStore.favoritos.add(moto);
-
-        mostrarMensaje(
-                "Favoritos",
-                moto.getNombre()
-                        + " agregado a favoritos"
-        );
     }
 
     // =================================================
@@ -297,18 +316,14 @@ public class DetalleMotoController {
                     );
 
             Scene scene =
-                    new Scene(loader.load());
+                    UI.crearEscena(loader.load());
 
             Stage stage =
                     (Stage) lblNombre
                             .getScene()
                             .getWindow();
 
-            stage.setScene(scene);
-
-            stage.setMaximized(true);
-
-            stage.show();
+            UI.mostrarMaximizado(stage, scene);
 
         } catch (Exception e) {
 

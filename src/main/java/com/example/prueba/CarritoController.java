@@ -1,6 +1,7 @@
 package com.example.prueba;
 
 import archivos.txt.ArchivoMotos;
+import estructuras.Cola;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -12,6 +13,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.text.DecimalFormat;
 
 public class CarritoController {
@@ -174,6 +177,7 @@ public class CarritoController {
             eliminar.setOnAction(e -> {
 
                 DataStore.carrito.remove(moto);
+                DataStore.guardarCarritoUsuario();
 
                 mostrarCarrito();
             });
@@ -196,6 +200,8 @@ public class CarritoController {
                     filaPrecio
             );
 
+            UI.aplicarHoverElevado(card);
+
             contenedorCarrito
                     .getChildren()
                     .add(card);
@@ -212,6 +218,35 @@ public class CarritoController {
     // COMPRAR TODO
     // =====================================
 
+    private boolean stockSuficienteParaCompra() {
+        List<String> revisadas = new ArrayList<>();
+
+        for (Moto moto : DataStore.carrito) {
+            String clave = moto.getNombre().toLowerCase();
+
+            if (revisadas.contains(clave)) {
+                continue;
+            }
+
+            revisadas.add(clave);
+
+            int cantidad = DataStore.contarEnCarrito(moto);
+
+            if (cantidad > moto.getStock()) {
+                mostrarMensaje(
+                        "Sin stock",
+                        "Solo hay " + moto.getStock()
+                                + " unidades disponibles para "
+                                + moto.getNombre()
+                );
+
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     @FXML
     public void comprarTodo() {
 
@@ -225,32 +260,43 @@ public class CarritoController {
             return;
         }
 
-        for (Moto moto : DataStore.carrito) {
-
-            if (moto.getStock() <= 0) {
-
-                mostrarMensaje(
-                        "Sin stock",
-                        "No hay unidades disponibles para "
-                                + moto.getNombre()
-                );
-
-                return;
-            }
+        if (!stockSuficienteParaCompra()) {
+            return;
         }
 
-        for (Moto moto : DataStore.carrito) {
+        Cola<Moto> colaCompra =
+                DataStore.crearColaCompra();
+
+        List<Moto> comprasProcesadas =
+                new ArrayList<>();
+
+        double totalCompra = 0;
+
+        while (!colaCompra.isEmpty()) {
+
+            Moto moto =
+                    colaCompra.poll();
 
             moto.setStock(
                     moto.getStock() - 1
             );
+
+            DataStore.registrarHistorial(moto);
+            comprasProcesadas.add(moto);
+            totalCompra += moto.getPrecio();
         }
 
         ArchivoMotos.guardarTodasLasMotos(
                 DataStore.motos
         );
 
+        DataStore.registrarCompra(
+                comprasProcesadas,
+                totalCompra
+        );
+
         DataStore.carrito.clear();
+        DataStore.guardarCarritoUsuario();
 
         mostrarCarrito();
 
@@ -268,6 +314,7 @@ public class CarritoController {
     public void vaciarCarrito() {
 
         DataStore.carrito.clear();
+        DataStore.guardarCarritoUsuario();
 
         mostrarCarrito();
 
@@ -294,18 +341,14 @@ public class CarritoController {
                     );
 
             Scene scene =
-                    new Scene(loader.load());
+                    UI.crearEscena(loader.load());
 
             Stage stage =
                     (Stage) contenedorCarrito
                             .getScene()
                             .getWindow();
 
-            stage.setScene(scene);
-
-            stage.setMaximized(true);
-
-            stage.show();
+            UI.mostrarMaximizado(stage, scene);
 
         } catch (Exception e) {
 

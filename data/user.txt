@@ -1,2 +1,4 @@
 javi,javier@gmail.com,1234
-admin,admin@gmail.com,1234
+ñañelover,lover67@gmail.com,1234
+jose,popo@gmail.com,12345678
+Angela,a@gmail.com,1234567890

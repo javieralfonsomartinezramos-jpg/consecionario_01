@@ -155,6 +155,18 @@
                                        -fx-background-radius: 14;
                                        -fx-padding: 11 22 11 22;
                                        -fx-cursor: hand;" />
+
+                        <Button text="CERRAR SESION"
+                                onAction="#cerrarSesion"
+                                style="-fx-background-color: transparent;
+                                       -fx-text-fill: #b8b8b8;
+                                       -fx-border-color: #555555;
+                                       -fx-border-radius: 14;
+                                       -fx-background-radius: 14;
+                                       -fx-font-size: 13;
+                                       -fx-font-weight: bold;
+                                       -fx-padding: 11 18 11 18;
+                                       -fx-cursor: hand;" />
                     </HBox>
 
                     <HBox alignment="CENTER_LEFT"

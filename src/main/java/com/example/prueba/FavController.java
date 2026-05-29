@@ -143,16 +143,17 @@ public class FavController {
                 return;
             }
 
-            moto.setStock(
-                    moto.getStock() - 1
-            );
+            if (DataStore.contarEnCarrito(moto) >= moto.getStock()) {
 
-            DataStore.carrito.add(moto);
+                mostrarMensaje(
+                        "Sin stock",
+                        "No hay mas unidades disponibles para agregar"
+                );
 
-            stock.setText(
-                    "Stock: "
-                            + moto.getStock()
-            );
+                return;
+            }
+
+            DataStore.agregarCarrito(moto);
 
             mostrarMensaje(
                     "Carrito",
@@ -179,6 +180,7 @@ public class FavController {
         eliminar.setOnAction(e -> {
 
             DataStore.favoritos.remove(moto);
+            DataStore.guardarFavoritosUsuario();
 
             cargarFavoritos();
         });
@@ -226,6 +228,8 @@ public class FavController {
                 botones
         );
 
+        UI.aplicarHoverElevado(card);
+
         return card;
     }
 
@@ -246,18 +250,14 @@ public class FavController {
                     );
 
             Scene scene =
-                    new Scene(loader.load());
+                    UI.crearEscena(loader.load());
 
             Stage stage =
                     (Stage) flowFavoritos
                             .getScene()
                             .getWindow();
 
-            stage.setScene(scene);
-
-            stage.setMaximized(true);
-
-            stage.show();
+            UI.mostrarMaximizado(stage, scene);
 
         } catch (Exception e) {
 

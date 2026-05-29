@@ -10,10 +10,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.Objects;
+import java.text.DecimalFormat;
 
 public class FavoritosController {
 
@@ -23,6 +24,9 @@ public class FavoritosController {
     @FXML
     private Button btnVolver;
 
+    private final DecimalFormat formatoPrecio =
+            new DecimalFormat("#,##0");
+
     @FXML
     public void initialize() {
 
@@ -31,16 +35,12 @@ public class FavoritosController {
 
     private void mostrarFavoritos() {
 
-        flowFavoritos
-                .getChildren()
-                .clear();
+        flowFavoritos.getChildren().clear();
 
         if (DataStore.favoritos.isEmpty()) {
 
             Label vacio =
-                    new Label(
-                            "❤ No tienes motos favoritas"
-                    );
+                    new Label("No tienes motos favoritas");
 
             vacio.setStyle("""
 
@@ -50,73 +50,50 @@ public class FavoritosController {
 
                     """);
 
-            flowFavoritos
-                    .getChildren()
-                    .add(vacio);
-
+            flowFavoritos.getChildren().add(vacio);
             return;
         }
 
         for (Moto moto : DataStore.favoritos) {
-
-            VBox card =
-                    crearCard(moto);
-
-            flowFavoritos
-                    .getChildren()
-                    .add(card);
+            flowFavoritos.getChildren().add(crearCard(moto));
         }
     }
 
-    private VBox crearCard(
-            Moto moto
-    ) {
+    private VBox crearCard(Moto moto) {
 
         ImageView imagen =
-                new ImageView();
+                crearImagen(moto);
 
-        try {
+        StackPane contenedorImagen =
+                new StackPane(imagen);
 
-            String ruta =
-                    "/com/example/prueba/images/"
-                            + moto.getImagen();
+        contenedorImagen.setPrefSize(260, 170);
 
-            Image img =
-                    new Image(
-                            Objects.requireNonNull(getClass()
-                                    .getResourceAsStream(ruta))
-                    );
+        contenedorImagen.setStyle("""
 
-            imagen.setImage(img);
+                -fx-background-color: #2a2a2a;
+                -fx-background-radius: 16;
+                -fx-padding: 10;
 
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
-        imagen.setFitWidth(230);
-
-        imagen.setFitHeight(160);
-
-        imagen.setPreserveRatio(true);
+                """);
 
         Label nombre =
-                new Label(
-                        moto.getNombre()
-                );
+                new Label(moto.getNombre());
+
+        nombre.setWrapText(true);
+        nombre.setMaxWidth(270);
+        nombre.setAlignment(Pos.CENTER);
 
         nombre.setStyle("""
 
                 -fx-text-fill: white;
-                -fx-font-size: 22;
+                -fx-font-size: 21;
                 -fx-font-weight: bold;
 
                 """);
 
         Label precio =
-                new Label(
-                        "$ " + moto.getPrecio()
-                );
+                new Label(formatearPrecio(moto.getPrecio()));
 
         precio.setStyle("""
 
@@ -127,10 +104,7 @@ public class FavoritosController {
                 """);
 
         Label cc =
-                new Label(
-                        moto.getCilindraje()
-                                + " CC"
-                );
+                new Label(moto.getMarca() + " | " + moto.getCilindraje() + " CC");
 
         cc.setStyle("""
 
@@ -140,9 +114,7 @@ public class FavoritosController {
                 """);
 
         Button eliminar =
-                new Button(
-                        "Eliminar"
-                );
+                new Button("Eliminar");
 
         eliminar.setStyle("""
 
@@ -158,51 +130,78 @@ public class FavoritosController {
         eliminar.setOnAction(e -> {
 
             DataStore.favoritos.remove(moto);
+            DataStore.guardarFavoritosUsuario();
 
             mostrarFavoritos();
         });
 
         HBox botones =
-                new HBox(10);
+                new HBox(10, eliminar);
 
         botones.setAlignment(Pos.CENTER);
-
-        botones.getChildren().add(eliminar);
 
         VBox card =
                 new VBox(15);
 
         card.setAlignment(Pos.CENTER);
-
         card.setPrefWidth(320);
 
         card.setStyle("""
 
-                -fx-background-color: #1e1e1e;
-                -fx-background-radius: 25;
-                -fx-padding: 20;
-
+                -fx-background-color: linear-gradient(to bottom, #242424, #171717);
+                -fx-background-radius: 20;
+                -fx-border-color: #333333;
+                -fx-border-radius: 20;
+                -fx-padding: 18;
                 -fx-effect: dropshadow(
                     three-pass-box,
-                    rgba(0,0,0,0.5),
-                    15,
+                    rgba(0,0,0,0.45),
+                    16,
                     0,
                     0,
-                    10
+                    8
                 );
 
                 """);
 
         card.getChildren().addAll(
-
-                imagen,
+                contenedorImagen,
                 nombre,
                 cc,
                 precio,
                 botones
         );
 
+        UI.aplicarHoverElevado(card);
+
         return card;
+    }
+
+    private ImageView crearImagen(Moto moto) {
+
+        ImageView imagen =
+                new ImageView();
+
+        try {
+            String ruta =
+                    "/com/example/prueba/images/"
+                            + moto.getImagen();
+
+            var recurso =
+                    getClass().getResourceAsStream(ruta);
+
+            if (recurso != null) {
+                imagen.setImage(new Image(recurso));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        imagen.setFitWidth(230);
+        imagen.setFitHeight(150);
+        imagen.setPreserveRatio(true);
+
+        return imagen;
     }
 
     @FXML
@@ -219,7 +218,7 @@ public class FavoritosController {
                     );
 
             Scene scene =
-                    new Scene(
+                    UI.crearEscena(
                             loader.load()
                     );
 
@@ -228,15 +227,16 @@ public class FavoritosController {
                             .getScene()
                             .getWindow();
 
-            stage.setScene(scene);
-
-            stage.setMaximized(true);
-
-            stage.show();
+            UI.mostrarMaximizado(stage, scene);
 
         } catch (Exception e) {
 
             e.printStackTrace();
         }
+    }
+
+    private String formatearPrecio(double precio) {
+
+        return "$" + formatoPrecio.format(precio);
     }
 }

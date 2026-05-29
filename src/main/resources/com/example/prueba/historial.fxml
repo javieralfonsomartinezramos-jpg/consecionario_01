@@ -42,12 +42,12 @@
                              -fx-border-width: 0 0 1 0;">
 
                     <VBox spacing="4">
-                        <Label text="HISTORIAL"
+                        <Label text="HISTORIAL DE COMPRAS"
                                style="-fx-text-fill: #f5c542;
                                       -fx-font-size: 32;
                                       -fx-font-weight: bold;" />
 
-                        <Label text="Ultimas motos visitadas o agregadas al carrito"
+                        <Label text="Solo aparecen las motos compradas y confirmadas"
                                style="-fx-text-fill: #b8b8b8;
                                       -fx-font-size: 14;" />
                     </VBox>
@@ -97,12 +97,12 @@
 
                             <VBox alignment="CENTER"
                                   spacing="8">
-                                <Label text="Actividad reciente"
+                                <Label text="Compras recientes"
                                        style="-fx-text-fill: white;
                                               -fx-font-size: 34;
                                               -fx-font-weight: bold;" />
 
-                                <Label text="Movimiento reciente del catalogo"
+                                <Label text="Productos confirmados desde el carrito"
                                        style="-fx-text-fill: #a8a8a8;
                                               -fx-font-size: 15;" />
                             </VBox>

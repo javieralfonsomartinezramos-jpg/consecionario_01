@@ -52,11 +52,7 @@ public class HistorialController {
             return;
         }
 
-        for (int i = DataStore.historial.size() - 1; i >= 0; i--) {
-
-            Moto moto =
-                    DataStore.historial.get(i);
-
+        for (Moto moto : DataStore.historial.toListDesdeCima()) {
             VBox card =
                     crearCard(moto);
 
@@ -185,6 +181,8 @@ public class HistorialController {
                 botones
         );
 
+        UI.aplicarHoverElevado(card);
+
         return card;
     }
 
@@ -237,7 +235,7 @@ public class HistorialController {
                     );
 
             Scene scene =
-                    new Scene(loader.load());
+                    UI.crearEscena(loader.load());
 
             DetalleMotoController controller =
                     loader.getController();
@@ -249,11 +247,7 @@ public class HistorialController {
                             .getScene()
                             .getWindow();
 
-            stage.setScene(scene);
-
-            stage.setMaximized(true);
-
-            stage.show();
+            UI.mostrarMaximizado(stage, scene);
 
         } catch (Exception e) {
 
@@ -265,6 +259,7 @@ public class HistorialController {
     public void limpiarHistorial() {
 
         DataStore.historial.clear();
+        DataStore.guardarHistorialUsuario();
 
         mostrarHistorial();
     }
@@ -282,18 +277,14 @@ public class HistorialController {
                     );
 
             Scene scene =
-                    new Scene(loader.load());
+                    UI.crearEscena(loader.load());
 
             Stage stage =
                     (Stage) flowHistorial
                             .getScene()
                             .getWindow();
 
-            stage.setScene(scene);
-
-            stage.setMaximized(true);
-
-            stage.show();
+            UI.mostrarMaximizado(stage, scene);
 
         } catch (Exception e) {
 

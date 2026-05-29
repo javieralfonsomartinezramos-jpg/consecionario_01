@@ -145,7 +145,7 @@ public class adminPanelController {
             );
         }
 
-        motosTabla.setAll(DataStore.motos);
+        motosTabla.setAll(DataStore.motos.toList());
     }
 
     // =========================
@@ -363,7 +363,7 @@ public class adminPanelController {
                 DataStore.motos
         );
 
-        motosTabla.setAll(DataStore.motos);
+        motosTabla.setAll(DataStore.motos.toList());
 
         tablaMotos.refresh();
     }
@@ -430,26 +430,7 @@ public class adminPanelController {
 
         DataStore.motos.remove(seleccionada);
 
-        DataStore.carrito.removeIf(
-                moto -> moto.getNombre()
-                        .equalsIgnoreCase(
-                                seleccionada.getNombre()
-                        )
-        );
-
-        DataStore.favoritos.removeIf(
-                moto -> moto.getNombre()
-                        .equalsIgnoreCase(
-                                seleccionada.getNombre()
-                        )
-        );
-
-        DataStore.historial.removeIf(
-                moto -> moto.getNombre()
-                        .equalsIgnoreCase(
-                                seleccionada.getNombre()
-                        )
-        );
+        DataStore.eliminarReferenciasDeMoto(seleccionada);
 
         guardarCambios();
 
@@ -507,18 +488,14 @@ public class adminPanelController {
                     );
 
             Scene scene =
-                    new Scene(loader.load());
+                    UI.crearEscena(loader.load());
 
             Stage stage =
                     (Stage) txtNombre
                             .getScene()
                             .getWindow();
 
-            stage.setScene(scene);
-
-            stage.setMaximized(true);
-
-            stage.show();
+            UI.mostrarMaximizado(stage, scene);
 
         } catch (Exception e) {
 

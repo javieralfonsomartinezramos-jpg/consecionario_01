@@ -1,6 +1,7 @@
 package com.example.prueba;
 
 import archivos.txt.ArchivoUsuarios;
+import archivos.txt.ArchivoSesiones;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -47,17 +48,13 @@ public class HelloController {
         // ADMIN
         // =================================================
 
-        if (correo.equals("admin@gmail.com")
-                && contrasena.equals("1234")) {
+        if (Session.esCredencialAdmin(correo, contrasena)) {
 
-            Session.admin = true;
-
-            Session.usuarioActual =
-                    new Users(
-                            "admin",
-                            "admin@gmail.com",
-                            "1234"
-                    );
+            Session.iniciarAdmin();
+            ArchivoSesiones.registrarInicio(
+                    Session.usuarioActual,
+                    Session.esAdmin()
+            );
 
             abrirCatalogo();
 
@@ -76,9 +73,11 @@ public class HelloController {
 
         if (usuario != null) {
 
-            Session.admin = false;
-
-            Session.usuarioActual = usuario;
+            Session.iniciarUsuario(usuario);
+            ArchivoSesiones.registrarInicio(
+                    Session.usuarioActual,
+                    Session.esAdmin()
+            );
 
             abrirCatalogo();
 
@@ -128,18 +127,14 @@ public class HelloController {
                     );
 
             Scene scene =
-                    new Scene(loader.load());
+                    UI.crearEscena(loader.load());
 
             Stage stage =
                     (Stage) txtCorreo
                             .getScene()
                             .getWindow();
 
-            stage.setScene(scene);
-
-            stage.setMaximized(true);
-
-            stage.show();
+            UI.mostrarMaximizado(stage, scene);
 
         } catch (Exception e) {
 
@@ -158,6 +153,14 @@ public class HelloController {
 
     @FXML
     public void salirPrograma() {
+
+        ArchivoSesiones.registrarCierre(
+                Session.usuarioActual,
+                Session.esAdmin()
+        );
+        DataStore.guardarDatosUsuario();
+        DataStore.limpiarDatosSesion();
+        Session.cerrarSesion();
 
         System.exit(0);
     }

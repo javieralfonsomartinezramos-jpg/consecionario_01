@@ -20,17 +20,13 @@ public class HelloApplication extends Application {
                                 "hello-view.fxml"));
 
         Scene scene =
-                new Scene(
+                UI.crearEscena(
                         fxmlLoader.load()
                 );
 
         stage.setTitle("MOTOSHOP");
 
-        stage.setScene(scene);
-
-        stage.setMaximized(true);
-
-        stage.show();
+        UI.mostrarMaximizado(stage, scene);
     }
 
     public static void main(String[] args) {

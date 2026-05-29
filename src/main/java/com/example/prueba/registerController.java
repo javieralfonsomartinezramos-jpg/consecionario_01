@@ -1,11 +1,11 @@
 package com.example.prueba;
 
+import archivos.txt.ArchivoDatosUsuario;
 import archivos.txt.ArchivoUsuarios;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -27,9 +27,9 @@ public class registerController {
     @FXML
     void registrarUsuario(ActionEvent event) {
 
-        String nombre = txtNombre.getText();
-        String correo = txtCorreo.getText();
-        String clave = txtContrasena.getText();
+        String nombre = txtNombre.getText().trim();
+        String correo = txtCorreo.getText().trim();
+        String clave = txtContrasena.getText().trim();
 
         if (nombre.isEmpty()
                 || correo.isEmpty()
@@ -44,23 +44,46 @@ public class registerController {
                 "^[A-Za-z0-9+_.-]+@(.+)$")) {
 
             mostrarMensaje("Error",
-                    "Correo inválido");
+                    "Correo invalido");
+            return;
+        }
+
+        if (ArchivoUsuarios.esDatoReservado(nombre, correo)) {
+
+            mostrarMensaje("Error",
+                    "Las credenciales del administrador estan reservadas");
             return;
         }
 
         if (!clave.matches("\\d+")) {
 
             mostrarMensaje("Error",
-                    "La contraseña debe contener solo números");
+                    "La contrasena debe contener solo numeros");
+            return;
+        }
+
+        if (nombre.contains(",")
+                || correo.contains(",")
+                || clave.contains(",")) {
+
+            mostrarMensaje("Error",
+                    "No uses comas en los datos de registro");
             return;
         }
 
         Users user =
                 new Users(nombre, correo, clave);
 
-        ArchivoUsuarios.guardarUsuario(user);
+        if (!ArchivoUsuarios.guardarUsuario(user)) {
 
-        mostrarMensaje("Éxito",
+            mostrarMensaje("Error",
+                    "Ya existe un usuario con ese correo");
+            return;
+        }
+
+        ArchivoDatosUsuario.inicializarDatos(user);
+
+        mostrarMensaje("Exito",
                 "Usuario registrado");
 
         txtNombre.clear();
@@ -80,13 +103,10 @@ public class registerController {
         Stage stage =
                 (Stage) txtNombre.getScene().getWindow();
 
-        stage.setScene(
-                new Scene(root, 1920, 1080)
+        UI.mostrarMaximizado(
+                stage,
+                UI.crearEscena(root)
         );
-
-        stage.setMaximized(true);
-
-        stage.show();
     }
 
     @FXML

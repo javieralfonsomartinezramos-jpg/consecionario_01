@@ -1,211 +1,256 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 
-<AnchorPane prefHeight="900.0"
-            prefWidth="1400.0"
-            style="-fx-background-color: #121212;"
-            xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.prueba.DetalleMotoController">
+<StackPane prefHeight="900.0"
+           prefWidth="1400.0"
+           style="-fx-background-color: linear-gradient(to bottom right, #080808, #121212, #191919);"
+           xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.prueba.DetalleMotoController">
 
     <children>
 
-        <VBox alignment="CENTER"
-              spacing="22.0"
-              AnchorPane.topAnchor="25.0"
-              AnchorPane.leftAnchor="50.0"
-              AnchorPane.rightAnchor="50.0"
-              AnchorPane.bottomAnchor="25.0">
+        <Circle fill="#f5c542"
+                opacity="0.04"
+                radius="260"
+                translateX="-640"
+                translateY="-350" />
 
-            <Label fx:id="lblNombre"
-                   text="Nombre de la moto"
-                   wrapText="true"
-                   maxWidth="1100"
-                   alignment="CENTER"
-                   style="-fx-text-fill: white;
-                          -fx-font-size: 40px;
-                          -fx-font-weight: bold;" />
+        <Circle fill="#e63946"
+                opacity="0.035"
+                radius="220"
+                translateX="690"
+                translateY="380" />
 
-            <HBox alignment="CENTER"
-                  spacing="45">
+        <BorderPane style="-fx-background-color: transparent;">
 
-                <StackPane prefWidth="650"
-                           prefHeight="420"
-                           maxWidth="650"
-                           maxHeight="420"
-                           style="-fx-background-color: #1e1e1e;
-                                  -fx-background-radius: 28;
-                                  -fx-padding: 25;
-                                  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.45), 20, 0, 0, 10);">
-
-                    <ImageView fx:id="imgMoto"
-                               fitWidth="600"
-                               fitHeight="360"
-                               preserveRatio="true" />
-                </StackPane>
-
-                <VBox alignment="CENTER"
+            <top>
+                <HBox alignment="CENTER_LEFT"
                       spacing="18"
-                      prefWidth="430">
+                      style="-fx-padding: 24 46 18 46;">
 
-                    <VBox alignment="CENTER"
-                          spacing="8"
-                          prefWidth="390"
-                          style="-fx-background-color: #1e1e1e;
-                                 -fx-background-radius: 18;
-                                 -fx-padding: 22;">
-
-                        <Label text="Marca"
-                               style="-fx-text-fill: #aaaaaa;
-                                      -fx-font-size: 17px;" />
-
-                        <Label fx:id="lblMarca"
-                               text="Marca"
-                               wrapText="true"
-                               alignment="CENTER"
-                               style="-fx-text-fill: white;
-                                      -fx-font-size: 25px;
-                                      -fx-font-weight: bold;" />
-                    </VBox>
-
-                    <VBox alignment="CENTER"
-                          spacing="8"
-                          prefWidth="390"
-                          style="-fx-background-color: #1e1e1e;
-                                 -fx-background-radius: 18;
-                                 -fx-padding: 22;">
-
-                        <Label text="Cilindraje"
-                               style="-fx-text-fill: #aaaaaa;
-                                      -fx-font-size: 17px;" />
-
-                        <Label fx:id="lblCc"
-                               text="0 CC"
-                               style="-fx-text-fill: white;
-                                      -fx-font-size: 25px;
-                                      -fx-font-weight: bold;" />
-                    </VBox>
-
-                    <VBox alignment="CENTER"
-                          spacing="8"
-                          prefWidth="390"
-                          style="-fx-background-color: #1e1e1e;
-                                 -fx-background-radius: 18;
-                                 -fx-padding: 22;">
-
-                        <Label text="Precio"
-                               style="-fx-text-fill: #aaaaaa;
-                                      -fx-font-size: 17px;" />
-
-                        <Label fx:id="lblPrecio"
-                               text="0"
+                    <VBox spacing="2">
+                        <Label text="MOTOSHOP"
                                style="-fx-text-fill: #f5c542;
-                                      -fx-font-size: 31px;
+                                      -fx-font-size: 30;
                                       -fx-font-weight: bold;" />
+
+                        <Label text="Ficha tecnica del producto"
+                               style="-fx-text-fill: #b8b8b8;
+                                      -fx-font-size: 13;" />
                     </VBox>
 
-                    <VBox alignment="CENTER"
-                          spacing="8"
-                          prefWidth="390"
-                          style="-fx-background-color: #1e1e1e;
-                                 -fx-background-radius: 18;
-                                 -fx-padding: 22;">
+                    <Region HBox.hgrow="ALWAYS" />
 
-                        <Label text="Stock"
-                               style="-fx-text-fill: #aaaaaa;
-                                      -fx-font-size: 17px;" />
+                    <Button text="Volver"
+                            onAction="#volverCatalogo"
+                            style="-fx-background-color: transparent;
+                                   -fx-text-fill: #f5c542;
+                                   -fx-border-color: #f5c542;
+                                   -fx-border-radius: 18;
+                                   -fx-background-radius: 18;
+                                   -fx-font-size: 14;
+                                   -fx-font-weight: bold;
+                                   -fx-padding: 11 22;
+                                   -fx-cursor: hand;" />
 
-                        <Label fx:id="lblStock"
-                               text="0"
-                               style="-fx-text-fill: #20d67b;
-                                      -fx-font-size: 25px;
-                                      -fx-font-weight: bold;" />
+                    <Button text="Ver carrito"
+                            onAction="#abrirCarrito"
+                            style="-fx-background-color: #f5c542;
+                                   -fx-text-fill: #111111;
+                                   -fx-background-radius: 18;
+                                   -fx-font-size: 14;
+                                   -fx-font-weight: bold;
+                                   -fx-padding: 12 24;
+                                   -fx-cursor: hand;" />
+                </HBox>
+            </top>
+
+            <center>
+                <HBox alignment="CENTER"
+                      spacing="34"
+                      style="-fx-padding: 10 46 46 46;">
+
+                    <VBox alignment="CENTER_LEFT"
+                          spacing="24"
+                          prefWidth="210"
+                          minWidth="190">
+
+                        <VBox spacing="4">
+                            <Label fx:id="lblCc"
+                                   text="0 CC"
+                                   style="-fx-text-fill: white;
+                                          -fx-font-size: 27;
+                                          -fx-font-weight: bold;
+                                          -fx-font-style: italic;" />
+
+                            <Label text="CILINDRAJE"
+                                   style="-fx-text-fill: #f5c542;
+                                          -fx-font-size: 14;
+                                          -fx-font-weight: bold;" />
+                        </VBox>
+
+                        <VBox spacing="4">
+                            <Label fx:id="lblMarca"
+                                   text="Marca"
+                                   wrapText="true"
+                                   style="-fx-text-fill: white;
+                                          -fx-font-size: 25;
+                                          -fx-font-weight: bold;
+                                          -fx-font-style: italic;" />
+
+                            <Label text="MARCA"
+                                   style="-fx-text-fill: #f5c542;
+                                          -fx-font-size: 14;
+                                          -fx-font-weight: bold;" />
+                        </VBox>
+
+                        <VBox spacing="4">
+                            <Label fx:id="lblStock"
+                                   text="0"
+                                   style="-fx-text-fill: white;
+                                          -fx-font-size: 27;
+                                          -fx-font-weight: bold;
+                                          -fx-font-style: italic;" />
+
+                            <Label text="DISPONIBLES"
+                                   style="-fx-text-fill: #20d67b;
+                                          -fx-font-size: 14;
+                                          -fx-font-weight: bold;" />
+                        </VBox>
+
                     </VBox>
 
-                </VBox>
+                    <StackPane HBox.hgrow="ALWAYS"
+                               maxWidth="650"
+                               prefHeight="530"
+                               style="-fx-background-color: transparent;">
 
-            </HBox>
+                        <ImageView fx:id="imgMoto"
+                                   fitWidth="650"
+                                   fitHeight="500"
+                                   preserveRatio="true" />
+                    </StackPane>
 
-            <VBox spacing="14"
-                  alignment="CENTER"
-                  maxWidth="1050"
-                  style="-fx-background-color: #1e1e1e;
-                         -fx-background-radius: 24;
-                         -fx-padding: 26;">
+                    <VBox alignment="CENTER_LEFT"
+                          spacing="18"
+                          prefWidth="520"
+                          maxWidth="560">
 
-                <Label text="Descripcion"
-                       style="-fx-text-fill: white;
-                              -fx-font-size: 27px;
-                              -fx-font-weight: bold;" />
+                        <Label fx:id="lblNombre"
+                               text="Nombre de la moto"
+                               wrapText="true"
+                               style="-fx-text-fill: #f5c542;
+                                      -fx-font-size: 56;
+                                      -fx-font-weight: bold;" />
 
-                <Label fx:id="lblDescripcion"
-                       wrapText="true"
-                       maxWidth="980"
-                       alignment="CENTER"
-                       text="Descripcion general de la motocicleta."
-                       style="-fx-text-fill: #d0d0d0;
-                              -fx-font-size: 18px;
-                              -fx-line-spacing: 4;" />
-            </VBox>
+                        <HBox alignment="CENTER_LEFT"
+                              spacing="10">
 
-            <HBox alignment="CENTER"
-                  spacing="18">
+                            <Label text="2026"
+                                   style="-fx-background-color: #f5c542;
+                                          -fx-text-fill: #111111;
+                                          -fx-background-radius: 18;
+                                          -fx-padding: 8 18;
+                                          -fx-font-size: 14;
+                                          -fx-font-weight: bold;" />
 
-                <Button text="Agregar al carrito"
-                        onAction="#agregarCarrito"
-                        prefWidth="220"
-                        style="-fx-background-color: #f5c542;
-                               -fx-text-fill: black;
-                               -fx-font-size: 17px;
-                               -fx-font-weight: bold;
-                               -fx-background-radius: 16;
-                               -fx-padding: 14 24;
-                               -fx-cursor: hand;" />
+                            <Label text="Disponible"
+                                   style="-fx-background-color: transparent;
+                                          -fx-text-fill: #20d67b;
+                                          -fx-border-color: #20d67b;
+                                          -fx-border-radius: 18;
+                                          -fx-background-radius: 18;
+                                          -fx-padding: 7 18;
+                                          -fx-font-size: 14;
+                                          -fx-font-weight: bold;" />
+                        </HBox>
 
-                <Button text="Ver carrito"
-                        onAction="#abrirCarrito"
-                        prefWidth="170"
-                        style="-fx-background-color: #2f80ed;
-                               -fx-text-fill: white;
-                               -fx-font-size: 17px;
-                               -fx-font-weight: bold;
-                               -fx-background-radius: 16;
-                               -fx-padding: 14 24;
-                               -fx-cursor: hand;" />
+                        <VBox spacing="0">
+                            <Label fx:id="lblPrecio"
+                                   text="0"
+                                   style="-fx-text-fill: white;
+                                          -fx-font-size: 64;
+                                          -fx-font-weight: bold;" />
 
-                <Button text="Favorito"
-                        onAction="#agregarFavorito"
-                        prefWidth="150"
-                        style="-fx-background-color: #e63946;
-                               -fx-text-fill: white;
-                               -fx-font-size: 17px;
-                               -fx-font-weight: bold;
-                               -fx-background-radius: 16;
-                               -fx-padding: 14 24;
-                               -fx-cursor: hand;" />
+                            <Label text="Precio de referencia"
+                                   style="-fx-text-fill: #b8b8b8;
+                                          -fx-font-size: 14;
+                                          -fx-font-weight: bold;" />
+                        </VBox>
 
-                <Button text="Volver"
-                        onAction="#volverCatalogo"
-                        prefWidth="140"
-                        style="-fx-background-color: #2c2c2c;
-                               -fx-text-fill: white;
-                               -fx-font-size: 17px;
-                               -fx-font-weight: bold;
-                               -fx-background-radius: 16;
-                               -fx-padding: 14 24;
-                               -fx-cursor: hand;" />
+                        <Label fx:id="lblDescripcion"
+                               wrapText="true"
+                               text="Descripcion general de la motocicleta."
+                               style="-fx-text-fill: #cfcfcf;
+                                      -fx-font-size: 17;
+                                      -fx-line-spacing: 5;" />
 
-            </HBox>
+                        <VBox alignment="CENTER"
+                              spacing="16"
+                              style="-fx-background-color: #1e1e1e;
+                                     -fx-background-radius: 20;
+                                     -fx-padding: 24;
+                                     -fx-border-color: #333333;
+                                     -fx-border-radius: 20;">
 
-        </VBox>
+                            <Label text="Que deseas hacer con esta moto?"
+                                   alignment="CENTER"
+                                   wrapText="true"
+                                   style="-fx-text-fill: white;
+                                          -fx-font-size: 21;
+                                          -fx-font-weight: bold;" />
+
+                            <HBox alignment="CENTER"
+                                  spacing="14">
+
+                                <Button text="Agregar al carrito"
+                                        onAction="#agregarCarrito"
+                                        prefWidth="190"
+                                        style="-fx-background-color: transparent;
+                                               -fx-border-color: #f5c542;
+                                               -fx-border-width: 2;
+                                               -fx-border-radius: 22;
+                                               -fx-background-radius: 22;
+                                               -fx-text-fill: #f5c542;
+                                               -fx-font-size: 14;
+                                               -fx-font-weight: bold;
+                                               -fx-padding: 13 18;
+                                               -fx-cursor: hand;" />
+
+                                <Button text="Favorito"
+                                        onAction="#agregarFavorito"
+                                        prefWidth="150"
+                                        style="-fx-background-color: transparent;
+                                               -fx-border-color: #e63946;
+                                               -fx-border-width: 2;
+                                               -fx-border-radius: 22;
+                                               -fx-background-radius: 22;
+                                               -fx-text-fill: #e63946;
+                                               -fx-font-size: 14;
+                                               -fx-font-weight: bold;
+                                               -fx-padding: 13 18;
+                                               -fx-cursor: hand;" />
+                            </HBox>
+                        </VBox>
+
+                    </VBox>
+
+                </HBox>
+            </center>
+
+        </BorderPane>
 
     </children>
 
-</AnchorPane>
+</StackPane>
